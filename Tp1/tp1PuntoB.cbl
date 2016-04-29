@@ -18,10 +18,16 @@
                                ORGANIZATION IS LINE SEQUENTIAL
                                FILE STATUS IS FS-TIEMPOS.
 
+           SELECT ESTADISTICAS ASSIGN TO DISK
+                               ORGANIZATION IS LINE SEQUENTIAL
+                               FILE STATUS IS FS-ESTADISTICAS.
+
        DATA DIVISION.
        FILE SECTION.
        FD EMPRESAS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS "/home/miki/empresas.dat".
+                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
+      -           'mos-4/Tp1/Archivos de prueba/empresas.dat'.
+
        01 EMP.
            03 EMP-CODIGO PIC 9(03).
            03 EMP-RAZON PIC X(25).
@@ -30,7 +36,8 @@
            03 EMP-CUIT PIC 9(11).
 
        FD TIEMPOS LABEL RECORD IS STANDARD
-                  VALUE OF FILE-ID IS "/home/miki/times.dat".
+                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
+      -           'mos-4/Tp1/Archivos de prueba/times.dat'.
 
        01 TIE.
            03 TIE-NUMERO PIC X(5).
@@ -42,10 +49,17 @@
            03 TIE-TAREA PIC X(04).
            03 TIE-HORAS PIC 9(2)V99.
 
+       FD ESTADISTICAS LABEL RECORD IS STANDARD
+                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
+      -           'mos-4/Tp1/Archivos de prueba/estadisticas.dat'.
+
+       01 LINEA PIC X(80).
+
        WORKING-STORAGE SECTION.
 
        77 FS-EMPRESAS PIC XX.
        77 FS-TIEMPOS PIC XX.
+       77 FS-ESTADISTICAS PIC XX.
 
        01 TABLA-EMPRESAS.
            03 WS-EMPRESA OCCURS 3 TIMES INDEXED BY IND-EMP.
@@ -55,21 +69,14 @@
        01 TABLA-TOTAL-EMPRESAS.
            03 EMPRESA OCCURS 3 TIMES.
                05 ANIO OCCURS 5 TIMES.
-                   07 ANIO-IMP.
-                       09 NOMBRE-EMP PIC X(20) VALUE SPACES.
-                       09 ANIO-NRO PIC X(6) VALUE SPACES.
-                       09 MES OCCURS 12 TIMES.
-                           11 HORAS-ACUMU PIC 9(3) VALUE ZERO.
-                           11 FILLER PIC X(1) VALUE SPACES.
-                       09 TOTAL-ANIO PIC 9(4) VALUE ZERO.
+                   07 MES OCCURS 12 TIMES.
+                       09 HORAS-ACUMU PIC 9(3) VALUE ZERO.
+                   07 TOTAL-ANIO PIC 9(4) VALUE ZERO.
 
        01 TABLA-TOTAL-MESES.
-           03 MES-IMP.
-               05 FILLER PIC X(26) VALUE "Totales".
-               05 MES OCCURS 12 TIMES.
-                   07 HORAS-ACUM PIC 9(3) VALUE ZERO.
-                   07 FILLER PIC X(1) VALUE SPACES.
-               05 TOTAL-MESES PIC 9(4) VALUE ZERO.
+           03 MES OCCURS 12 TIMES.
+              05 HORAS-ACUM PIC 9(3) VALUE ZERO.
+           03 TOTAL-MESES PIC 9(4) VALUE ZERO.
 
        01 ANIO-CORRIENTE PIC 9(4).
        01 MES-CORRIENTE PIC 9(2).
@@ -99,23 +106,36 @@
        01 REP-HEADER-TABLA.
            02 FILLER PIC X(7) VALUE "Empresa".
            02 FILLER PIC X(13) VALUE SPACES.
-           02 FILLER PIC X(31) VALUE "Año   Ene Feb Mar Abr May Jun ".
-           02 FILLER PIC X(29) VALUE "Jul Ago Sep Oct Nov Dic Total".
+           02 FILLER PIC X(60) VALUE "Año   Ene Feb Mar Abr May Jun Jul
+      -                              " Ago Sep Oct Nov Dic Total".
 
        01 REP-REG-ANIO.
            02 RAZON PIC X(20) VALUE SPACES.
            02 ANIO PIC 9(4).
            02 FILLER PIC X(3) VALUE SPACES.
 
+       01 REP-LINEA-TABLA.
+           02 EMPRESA PIC X(20) VALUE SPACES.
+           02 ANIO PIC 9(4).
+           02 FILLER PIC X(3) VALUE SPACES.
+           02 MESES OCCURS 12 TIMES INDEXED BY IND-MES-REP.
+               03 HORA-ACUM-MES-ANIO PIC 9(3).
+               03 FILLER PIC X VALUE SPACES.
+           02 TOTAL-ANIO-REP PIC 9(4).
 
-       01 LINEA-EN-BLANCO PIC X(80) VALUE SPACES.
+       01 REP-LINEA-TOTALES.
+           02 FILLER PIC X(7) VALUE "Totales".
+           02 FILLER PIC X(20) VALUE SPACES.
+           02 MESES OCCURS 12 TIMES INDEXED BY IND-MES-TOT.
+               03 HORA-ACUM-MES PIC 9(3).
+               03 FILLER PIC X VALUE SPACES.
+           02 TOTAL-MES-REP PIC 9(4).
+
+
        01 LINEA-RECTA.
-           02 FILLER PIC X(30) VALUE "------------------------------".
-           02 FILLER PIC X(30) VALUE "------------------------------".
-           02 FILLER PIC X(20) VALUE "--------------------".
+           02 FILLER PIC X(80) VALUE "----------------------------------
+      -              "----------------------------------------------".
 
-       01 DEC PIC 9(2)V99.
-       01 INT PIC 9(3).
 
        PROCEDURE DIVISION.
        MAIN-PROCEDURE.
@@ -126,7 +146,6 @@
            PERFORM AVANZAR-HASTA-FECHA-VALIDA.
            PERFORM PROCESAR-TIEMPOS UNTIL FS-TIEMPOS = '10'.
            PERFORM IMPRIMIR-REPORTE.
-           DISPLAY "Hello world"
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
 
@@ -140,6 +159,12 @@
                OPEN INPUT TIEMPOS.
                IF FS-TIEMPOS NOT = ZERO
                    DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIEMPOS
+                   PERFORM CERRAR-ARCHIVOS
+                   STOP RUN.
+               OPEN OUTPUT ESTADISTICAS.
+               IF FS-ESTADISTICAS NOT = ZERO
+                   DISPLAY "ERROR AL ABRIR ESTADISTICAS FS: "
+                           FS-ESTADISTICAS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
 
@@ -207,22 +232,19 @@
               ADD TIE-HORAS TO HORAS-ACUM(IND-MES)  TOTAL-MESES.
 
            IMPRIMIR-REPORTE.
-               DISPLAY LINEA-EN-BLANCO.
                PERFORM IMPRIMIR-ENCABEZADO.
                PERFORM IMPRIMIR-TABLA-POR-EMPRESA
                        VARYING IND-EMPRESA FROM 1 BY 1
                        UNTIL IND-EMPRESA > 3.
-               DISPLAY LINEA-EN-BLANCO.
                PERFORM IMPRIMIR-TABLA-TOTAL-MESES.
-               DISPLAY LINEA-EN-BLANCO.
 
 
            IMPRIMIR-ENCABEZADO.
                MOVE FUNCTION CURRENT-DATE(7:2) TO REP-LINEA1-FECHA-DD.
                MOVE FUNCTION CURRENT-DATE(5:2) TO REP-LINEA1-FECHA-MM.
                MOVE FUNCTION CURRENT-DATE(1:4) TO REP-LINEA1-FECHA-AAAA.
-               DISPLAY REP-LINEA1.
-               DISPLAY REP-TITULO.
+               WRITE LINEA FROM REP-LINEA1.
+               WRITE LINEA FROM REP-TITULO.
 
            IMPRIMIR-TABLA-POR-EMPRESA.
                PERFORM IMPRIMIR-HEADER-TABLA.
@@ -231,25 +253,38 @@
                        UNTIL IND-ANIO > 5.
 
            IMPRIMIR-HEADER-TABLA.
-               DISPLAY LINEA-EN-BLANCO.
-               DISPLAY REP-HEADER-TABLA.
-               DISPLAY LINEA-RECTA.
+               WRITE LINEA FROM REP-HEADER-TABLA AFTER 1 END-WRITE.
+               WRITE LINEA FROM LINEA-RECTA.
 
 
            IMPRIMIR-REG-POR-ANIO.
                IF IND-ANIO = 1
                    MOVE RAZON-SOCIAL(IND-EMPRESA)
-                        TO NOMBRE-EMP(IND-EMPRESA,IND-ANIO).
-               ADD ANIO-LIMITE TO IND-ANIO GIVING ANIO-A-IMPRIMIR.
-               SUBTRACT 1 FROM ANIO-A-IMPRIMIR.
-               MOVE ANIO-A-IMPRIMIR TO ANIO-NRO(IND-EMPRESA,IND-ANIO).
-               DISPLAY ANIO-IMP(IND-EMPRESA,IND-ANIO).
+                        TO EMPRESA IN REP-LINEA-TABLA.
+               ADD ANIO-LIMITE TO IND-ANIO GIVING ANIO
+                   IN REP-LINEA-TABLA.
+               SUBTRACT 1 FROM ANIO IN REP-LINEA-TABLA.
+               PERFORM CARGAR-REG-IMP-TABLA VARYING IND-MES-REP
+                       FROM 1 BY 1 UNTIL IND-MES-REP > 12.
+               MOVE TOTAL-ANIO(IND-EMP,IND-ANIO) TO TOTAL-ANIO-REP.
+               WRITE LINEA FROM REP-LINEA-TABLA.
+
+           CARGAR-REG-IMP-TABLA.
+               MOVE HORAS-ACUMU(IND-EMP,IND-ANIO,IND-MES-REP)
+                    TO HORA-ACUM-MES-ANIO(IND-MES-REP).
 
            IMPRIMIR-TABLA-TOTAL-MESES.
-               DISPLAY MES-IMP.
+              PERFORM CARGAR-TABLA-TOTAL-MESES
+                      VARYING IND-MES-TOT FROM 1 BY 1
+                      UNTIL IND-MES-TOT > 12.
+              MOVE TOTAL-MESES TO TOTAL-MES-REP.
+              WRITE LINEA FROM REP-LINEA-TOTALES AFTER 1 END-WRITE.
+
+           CARGAR-TABLA-TOTAL-MESES.
+               MOVE HORAS-ACUM(IND-MES-TOT)
+                    TO HORA-ACUM-MES(IND-MES-TOT).
 
            CERRAR-ARCHIVOS.
-               CLOSE EMPRESAS.
-               CLOSE TIEMPOS.
+               CLOSE EMPRESAS TIEMPOS ESTADISTICAS.
 
        END PROGRAM TP1-PUNTO-B.

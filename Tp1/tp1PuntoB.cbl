@@ -89,25 +89,23 @@
        01 IND-ANIO PIC 9(3).
 
        01 REP-LINEA1.
-           02 FILLER PIC X(8) VALUE "Fecha: ".
+           02 FILLER PIC X(8) VALUE 'Fecha: '.
            02 REP-LINEA1-FECHA-DD PIC 9(2).
-           02 FILLER PIC X(1) VALUE "/".
+           02 FILLER PIC X(1) VALUE '/'.
            02 REP-LINEA1-FECHA-MM PIC 9(2).
-           02 FILLER PIC X(1) VALUE "/".
+           02 FILLER PIC X(1) VALUE '/'.
            02 REP-LINEA1-FECHA-AAAA PIC 9(4).
 
 
        01 REP-TITULO.
            02 FILLER PIC X(12) VALUE SPACES.
-           02 PARTE-1 PIC X(27) VALUE "Listado de Estadístico de ".
-           02 PARTE-2 PIC X(30) VALUE "Horas aplicadas por año y mes".
-           02 FILLER PIC X(11) VALUE SPACES.
+           02 PARTE-1 PIC X(56) VALUE 'Listado de Estadístico de Horas a
+      -                                'plicadas por año y mes'.
+           02 FILLER PIC X(12) VALUE SPACES.
 
        01 REP-HEADER-TABLA.
-           02 FILLER PIC X(7) VALUE "Empresa".
-           02 FILLER PIC X(13) VALUE SPACES.
-           02 FILLER PIC X(60) VALUE "Año   Ene Feb Mar Abr May Jun Jul
-      -                              " Ago Sep Oct Nov Dic Total".
+           02 FILLER PIC X(80) VALUE 'Empresa             Ano    Ene Feb
+      -        ' Mar Abr May Jun Jul Ago Sep Oct Nov Dic Total'.
 
        01 REP-REG-ANIO.
            02 RAZON PIC X(20) VALUE SPACES.
@@ -124,7 +122,7 @@
            02 TOTAL-ANIO-REP PIC 9(4).
 
        01 REP-LINEA-TOTALES.
-           02 FILLER PIC X(7) VALUE "Totales".
+           02 FILLER PIC X(7) VALUE 'Totales'.
            02 FILLER PIC X(20) VALUE SPACES.
            02 MESES OCCURS 12 TIMES INDEXED BY IND-MES-TOT.
                03 HORA-ACUM-MES PIC 9(3).
@@ -132,10 +130,7 @@
            02 TOTAL-MES-REP PIC 9(4).
 
 
-       01 LINEA-RECTA.
-           02 FILLER PIC X(80) VALUE "----------------------------------
-      -              "----------------------------------------------".
-
+       77 LINEA-RECTA PIC X(80) VALUE ALL '-'.
 
        PROCEDURE DIVISION.
        MAIN-PROCEDURE.
@@ -153,17 +148,17 @@
            ABRIR-ARCHIVOS.
                OPEN INPUT EMPRESAS.
                IF FS-EMPRESAS NOT = ZERO
-                   DISPLAY "ERROR AL ABRIR EMPRESAS FS: " FS-EMPRESAS
+                   DISPLAY 'ERROR AL ABRIR EMPRESAS FS: ' FS-EMPRESAS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
                OPEN INPUT TIEMPOS.
                IF FS-TIEMPOS NOT = ZERO
-                   DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIEMPOS
+                   DISPLAY 'ERROR AL ABRIR TIMES FS: ' FS-TIEMPOS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
                OPEN OUTPUT ESTADISTICAS.
                IF FS-ESTADISTICAS NOT = ZERO
-                   DISPLAY "ERROR AL ABRIR ESTADISTICAS FS: "
+                   DISPLAY 'ERROR AL ABRIR ESTADISTICAS FS: '
                            FS-ESTADISTICAS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
@@ -176,7 +171,7 @@
            LEER-EMPRESAS.
                READ EMPRESAS.
                IF FS-EMPRESAS NOT = ZERO AND 10
-                   DISPLAY "ERROR AL LEER EMPRESAS FS" FS-EMPRESAS
+                   DISPLAY 'ERROR AL LEER EMPRESAS FS' FS-EMPRESAS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
 
@@ -189,7 +184,7 @@
            LEER-TIEMPOS.
                READ TIEMPOS.
                IF FS-TIEMPOS NOT = ZERO AND 10
-                   DISPLAY "ERROR AL LEER TIMES FS: " FS-TIEMPOS
+                   DISPLAY 'ERROR AL LEER TIMES FS: ' FS-TIEMPOS
                    PERFORM CERRAR-ARCHIVOS
                    STOP RUN.
 
@@ -216,7 +211,7 @@
            OBTENER-INDICE-EMPRESA.
                SET IND-EMP TO 1.
                SEARCH WS-EMPRESA
-                   AT END DISPLAY "NO SE ENCONTRO CODIGO EMPRESA"
+                   AT END DISPLAY 'NO SE ENCONTRO CODIGO EMPRESA'
                    WHEN CODIGO(IND-EMP) = TIE-EMPRESA
                    NEXT SENTENCE
                    END-SEARCH.
@@ -233,6 +228,7 @@
 
            IMPRIMIR-REPORTE.
                PERFORM IMPRIMIR-ENCABEZADO.
+               PERFORM IMPRIMIR-HEADER-TABLA.
                PERFORM IMPRIMIR-TABLA-POR-EMPRESA
                        VARYING IND-EMPRESA FROM 1 BY 1
                        UNTIL IND-EMPRESA > 3.
@@ -244,23 +240,24 @@
                MOVE FUNCTION CURRENT-DATE(5:2) TO REP-LINEA1-FECHA-MM.
                MOVE FUNCTION CURRENT-DATE(1:4) TO REP-LINEA1-FECHA-AAAA.
                WRITE LINEA FROM REP-LINEA1.
-               WRITE LINEA FROM REP-TITULO.
+               WRITE LINEA FROM REP-TITULO BEFORE 2.
 
            IMPRIMIR-TABLA-POR-EMPRESA.
-               PERFORM IMPRIMIR-HEADER-TABLA.
+               WRITE LINEA FROM LINEA-RECTA.
                PERFORM IMPRIMIR-REG-POR-ANIO
                        VARYING IND-ANIO FROM 1 BY 1
                        UNTIL IND-ANIO > 5.
 
            IMPRIMIR-HEADER-TABLA.
-               WRITE LINEA FROM REP-HEADER-TABLA AFTER 1 END-WRITE.
-               WRITE LINEA FROM LINEA-RECTA.
+               WRITE LINEA FROM REP-HEADER-TABLA BEFORE 1.
 
 
            IMPRIMIR-REG-POR-ANIO.
                IF IND-ANIO = 1
                    MOVE RAZON-SOCIAL(IND-EMPRESA)
-                        TO EMPRESA IN REP-LINEA-TABLA.
+                        TO EMPRESA IN REP-LINEA-TABLA
+               ELSE
+                   MOVE SPACES TO EMPRESA IN REP-LINEA-TABLA.
                ADD ANIO-LIMITE TO IND-ANIO GIVING ANIO
                    IN REP-LINEA-TABLA.
                SUBTRACT 1 FROM ANIO IN REP-LINEA-TABLA.
@@ -278,7 +275,7 @@
                       VARYING IND-MES-TOT FROM 1 BY 1
                       UNTIL IND-MES-TOT > 12.
               MOVE TOTAL-MESES TO TOTAL-MES-REP.
-              WRITE LINEA FROM REP-LINEA-TOTALES AFTER 1 END-WRITE.
+              WRITE LINEA FROM REP-LINEA-TOTALES AFTER 1.
 
            CARGAR-TABLA-TOTAL-MESES.
                MOVE HORAS-ACUM(IND-MES-TOT)

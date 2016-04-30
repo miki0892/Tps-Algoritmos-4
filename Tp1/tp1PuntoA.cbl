@@ -336,7 +336,7 @@
       *******************************************************************
        AVANZAR-CONSULTOR.
            PERFORM LEER-CONSULTORES UNTIL
-               (CONS-NUMERO = NUMERO IN REG-MIN) OR
+               (CONS-NUMERO >= NUMERO IN REG-MIN) OR
                FS-CONSULTORES = 10.
       *******************************************************************
        PROCESAMIENTO-GRAL.
@@ -345,13 +345,14 @@
            PERFORM IMPRIMIR-DATOS-CONSULTOR.
            PERFORM INICIALIZAR-TOTALES-CONSULTOR.
            PERFORM PROCESAMIENTO-CONSULTOR
-               UNTIL NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT.
+               UNTIL (NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT)
+               OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
            PERFORM IMPRIMIR-TOTAL-CONSULTOR.
            PERFORM AVANZAR-CONSULTOR.
 
       *******************************************************************
        AVANZAR-CONSULTOR-DEL-TIMES.
-           PERFORM AVANZAR-TIMES UNTIL TIE-NUMERO = NUMERO IN REG-MIN
+           PERFORM AVANZAR-TIMES UNTIL TIE-NUMERO >= NUMERO IN REG-MIN
                OR FS-TIEMPOS = 10.
 
        AVANZAR-TIMES.
@@ -383,8 +384,9 @@
            PERFORM IMPRIMIR-HEADER-TABLA.
            PERFORM INICIALIZAR-TOTALES-FECHA.
            PERFORM PROCESAMIENTO-FECHA UNTIL
-               NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT
-               AND FECHA IN REG-MIN <> FECHA IN REG-MIN-ANT.
+               (NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT
+               AND FECHA IN REG-MIN <> FECHA IN REG-MIN-ANT)
+               OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
            PERFORM IMPRIMIR-TOTAL-FECHA.
 
       *******************************************************************

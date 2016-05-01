@@ -61,7 +61,7 @@
            03 NOV1-EMPRESA PIC 9(03).
            03 NOV1-TAREA PIC X(04).
            03 NOV1-HORAS PIC 9(2)V99.
-           03 NOV1-TIPO PIC 9.
+           03 NOV1-TIPO PIC 99.
 
 
        FD NOVTIMES2 LABEL RECORD IS STANDARD
@@ -76,7 +76,7 @@
            03 NOV2-EMPRESA PIC 9(03).
            03 NOV2-TAREA PIC X(04).
            03 NOV2-HORAS PIC 9(2)V99.
-           03 NOV2-TIPO PIC 9.
+           03 NOV2-TIPO PIC 99.
 
        FD NOVTIMES3 LABEL RECORD IS STANDARD
                     VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
@@ -90,7 +90,7 @@
            03 NOV3-EMPRESA PIC 9(03).
            03 NOV3-TAREA PIC X(04).
            03 NOV3-HORAS PIC 9(2)V99.
-           03 NOV3-TIPO PIC 9.
+           03 NOV3-TIPO PIC 99.
 
        FD TIEMPOS LABEL RECORD IS STANDARD
                    VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
@@ -144,7 +144,7 @@
       -            'mos-4/Tp1/Archivos de prueba/tarifas.dat'.
        01 TAR-REG.
            03 TAR-SRT PIC X(02).
-           03 TAR-TIPO PIC 9.
+           03 TAR-TIPO PIC 99.
            03 TAR-TARIFA PIC 9(5)V99.
 
        FD LISTADO LABEL RECORD IS STANDARD
@@ -172,7 +172,7 @@
        01 TABLA-TARIFAS.
            03 ELEMENTO OCCURS 90 TIMES INDEXED BY IND-TAR.
                05 CATEGORIA PIC X(02).
-               05 TIPO-TAR PIC 9.
+               05 TIPO-TAR PIC 99.
                05 TARIFA PIC 9(5)V99.
 
        01 ARCHIVO-MINIMO PIC 9.
@@ -189,7 +189,7 @@
            03 EMPRESA PIC 9(03).
            03 TAREA PIC X(04).
            03 HORAS PIC 9(2)V99.
-           03 TIPO PIC 9.
+           03 TIPO PIC 99.
 
        01 REG-MIN-ANT.
            03 NUMERO PIC X(5).
@@ -197,7 +197,7 @@
            03 EMPRESA PIC 9(03).
            03 TAREA PIC X(04).
            03 HORAS PIC 9(2)V99.
-           03 TIPO PIC 9.
+           03 TIPO PIC 99.
 
        01 IMPORTE-AUX PIC 9(10)V99.
        01 TOTAL-GRAL-IMPORTE PIC 9(10)V99 VALUE ZERO.
@@ -310,6 +310,8 @@
            PERFORM PROCESAMIENTO-GRAL UNTIL FS-NOVTIMES1 = 10
                AND FS-NOVTIMES2 = 10
                AND FS-NOVTIMES3 = 10.
+      * CHEQUEAR SI ESTO ESTÁ BIEN: AVANZAR HASTA TERMINAR TIMES
+           PERFORM AVANZAR-TIMES UNTIL FS-TIEMPOS = 10.
            PERFORM IMPRIMIR-TOTAL-GRAL.
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
@@ -455,7 +457,7 @@
       *******************************************************************
        BUSCAR-CLAVE-MINIMA.
            MOVE 1 TO ARCHIVO-MINIMO.
-           MOVE NOV1-REG     TO REG-MIN.
+           MOVE NOV1-REG TO REG-MIN.
 
            MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
            MOVE MES IN REG-MIN TO MES IN FECHA-INV1.
@@ -465,13 +467,13 @@
            MOVE MES IN NOV2-FECHA TO MES IN FECHA-INV2.
            MOVE DIA IN NOV2-FECHA TO DIA IN FECHA-INV2.
 
-           IF NOV2-NUMERO < NUMERO IN REG-MIN
+           IF NOV2-NUMERO < NUMERO IN REG-MIN OR FS-ARCHIVOS(1) = 1
                MOVE NOV2-REG TO REG-MIN
                MOVE 2 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV2-NUMERO = NUMERO IN REG-MIN) AND
                (FECHA-INV2 < FECHA-INV1)
-                   MOVE NOV2-REG     TO REG-MIN
+                   MOVE NOV2-REG TO REG-MIN
                    MOVE 2 TO ARCHIVO-MINIMO.
 
            MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
@@ -483,18 +485,19 @@
            MOVE DIA IN NOV3-FECHA TO DIA IN FECHA-INV2.
 
            IF NOV3-NUMERO < NUMERO IN REG-MIN
-               MOVE NOV3-REG TO REG-MIN
-               MOVE 3 TO ARCHIVO-MINIMO
+               OR ( FS-ARCHIVOS(1) = 1 AND FS-ARCHIVOS(2) = 1)
+                   MOVE NOV3-REG TO REG-MIN
+                   MOVE 3 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV3-NUMERO = NUMERO IN REG-MIN) AND
                (FECHA-INV2 < FECHA-INV1)
-                   MOVE NOV3-REG     TO REG-MIN
+                   MOVE NOV3-REG TO REG-MIN
                    MOVE 3 TO ARCHIVO-MINIMO.
 
       *******************************************************************
        AVANZAR-CONSULTOR.
            PERFORM LEER-CONSULTORES UNTIL
-               (CONS-NUMERO >= NUMERO IN REG-MIN) OR
+               (CONS-NUMERO NOT < NUMERO IN REG-MIN) OR
                FS-CONSULTORES = 10.
 
       *******************************************************************
@@ -504,15 +507,18 @@
            PERFORM IMPRIMIR-DATOS-CONSULTOR.
            PERFORM INICIALIZAR-TOTALES-CONSULTOR.
            PERFORM PROCESAMIENTO-CONSULTOR
-               UNTIL (NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT)
+               UNTIL (NUMERO IN REG-MIN NOT = NUMERO IN REG-MIN-ANT)
                OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
            PERFORM IMPRIMIR-TOTAL-CONSULTOR.
            PERFORM AVANZAR-CONSULTOR.
+           PERFORM AVANZAR-CONSULTOR-DEL-TIMES.
+           MOVE REG-MIN TO REG-MIN-ANT.
 
       *******************************************************************
        AVANZAR-CONSULTOR-DEL-TIMES.
-           PERFORM AVANZAR-TIMES UNTIL TIE-NUMERO >= NUMERO IN REG-MIN
-               OR FS-TIEMPOS = 10.
+           PERFORM AVANZAR-TIMES UNTIL
+               (TIE-NUMERO NOT < NUMERO IN REG-MIN)
+               OR (FS-TIEMPOS = 10).
 
        AVANZAR-TIMES.
            WRITE TIE-NEW-REG FROM TIE-REG.
@@ -554,10 +560,13 @@
            PERFORM IMPRIMIR-HEADER-TABLA.
            PERFORM INICIALIZAR-TOTALES-FECHA.
            PERFORM PROCESAMIENTO-FECHA UNTIL
-               (NUMERO IN REG-MIN <> NUMERO IN REG-MIN-ANT
-               AND FECHA IN REG-MIN <> FECHA IN REG-MIN-ANT)
+               (NUMERO IN REG-MIN NOT = NUMERO IN REG-MIN-ANT
+               OR FECHA IN REG-MIN NOT = FECHA IN REG-MIN-ANT)
                OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
            PERFORM IMPRIMIR-TOTAL-FECHA.
+           PERFORM AVANZAR-FECHA-DEL-TIMES.
+           IF NUMERO IN REG-MIN = NUMERO IN REG-MIN-ANT
+               MOVE REG-MIN TO REG-MIN-ANT.
 
       *******************************************************************
        AVANZAR-FECHA-DEL-TIMES.
@@ -570,8 +579,8 @@
            MOVE DIA IN REG-MIN TO DIA IN FECHA-INV2.
 
            PERFORM AVANZAR-TIMES-FECHA UNTIL
-               (TIE-NUMERO <> NUMERO IN REG-MIN
-               OR FECHA-INV1 > FECHA-INV2)
+               TIE-NUMERO NOT = NUMERO IN REG-MIN
+               OR FECHA-INV1 > FECHA-INV2
                OR FS-TIEMPOS = 10.
 
        AVANZAR-TIMES-FECHA.
@@ -605,6 +614,7 @@
            MOVE REG-MIN TO REG-MIN-ANT.
            PERFORM LEER-DE-ARCHIVO-MIN.
            PERFORM BUSCAR-CLAVE-MINIMA.
+
 
       *******************************************************************
        ESCRIBIR-MINIMO-EN-TIMES-NEW.

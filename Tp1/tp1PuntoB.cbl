@@ -25,8 +25,8 @@
        DATA DIVISION.
        FILE SECTION.
        FD EMPRESAS LABEL RECORD IS STANDARD
-                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
-      -           'mos-4/Tp1/Archivos de prueba/empresas.dat'.
+                  VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
+      -           'os-4/Tp1/Archivos de prueba/empresas.dat'.
 
        01 EMP.
            03 EMP-CODIGO PIC 9(03).
@@ -36,8 +36,8 @@
            03 EMP-CUIT PIC 9(11).
 
        FD TIEMPOS LABEL RECORD IS STANDARD
-                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
-      -           'mos-4/Tp1/Archivos de prueba/times.dat'.
+                  VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
+      -           'os-4/Tp1/Archivos de prueba/times.dat'.
 
        01 TIE.
            03 TIE-NUMERO PIC X(5).
@@ -50,8 +50,8 @@
            03 TIE-HORAS PIC 9(2)V99.
 
        FD ESTADISTICAS LABEL RECORD IS STANDARD
-                  VALUE OF FILE-ID IS '/home/miki/Escritorio/Tps-Algorit
-      -           'mos-4/Tp1/Archivos de prueba/estadisticas.dat'.
+                  VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
+      -           'os-4/Tp1/Archivos de prueba/estadisticas.dat'.
 
        01 LINEA PIC X(80).
 

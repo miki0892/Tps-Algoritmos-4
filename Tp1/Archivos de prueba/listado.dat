@@ -1,0 +1,53 @@
+Fecha:  01/05/2016                                                  001
+                           Listado de horas aplicadas
+Consultor: 00010          Nombre: Javier Ugarte
+                          Categoría: 03
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 01012011   002   LA SERENISIMA S.A.         01         999999 1050 104999989
+Totales por fecha                                            1050    104999989
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 10012011   002   LA SERENISIMA S.A.         01         999999 1050 104999989
+Totales por fecha                                            1050    104999989
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 03022011   001   ARCOR S.A.                 02         111111 2000  22222220
+Totales por fecha                                            2000     22222220
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 25022011   002   LA SERENISIMA S.A.         02         111111 2000  22222220
+Totales por fecha                                            2000     22222220
+Totales por Consultor                                        6100    254444418
+Fecha:  01/05/2016                                                  002
+                           Listado de horas aplicadas
+Consultor: 00011          Nombre: Miki Perez
+                          Categoría: 01
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 01022009   002   LA SERENISIMA S.A.         01         111111 1050  11666665
+Totales por fecha                                            1050     11666665
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 12032009   002   LA SERENISIMA S.A.         01         111111 1050  11666665
+Totales por fecha                                            1050     11666665
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 01022010   003   ILOLAY S.A.                03         333333 1050  34999996
+Totales por fecha                                            1050     34999996
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 01022011   003   ILOLAY S.A.                02         222222 1050  23333331
+Totales por fecha                                            1050     23333331
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 04052011   003   ILOLAY S.A.                03         333333 1050  34999996
+Totales por fecha                                            1050     34999996
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 03082011   003   ILOLAY S.A.                02         222222 1050  23333331
+Totales por fecha                                            1050     23333331
+Totales por Consultor                                        6300    139999984
+Fecha:  01/05/2016                                                  003
+                           Listado de horas aplicadas
+Consultor: 00012          Nombre: Lula Julia
+                          Categoría: 02
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 01022012   003   ILOLAY S.A.                02         666666 1050  69999993
+Totales por fecha                                            1050     69999993
+     Fecha     Empresa     Razon social     Tipo     Tarifa     Horas    Importe
+ 11092012   003   ILOLAY S.A.                01         555555 1050  58333327
+Totales por fecha                                            1050     58333327
+Totales por Consultor                                        2100    128333320
+
+Total general                                                         522777722

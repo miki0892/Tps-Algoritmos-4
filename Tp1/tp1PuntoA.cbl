@@ -206,6 +206,7 @@
        01 TOTAL-FECHA-IMPORTE PIC 9(7)9V99 VALUE ZERO.
        01 TOTAL-FECHA-HS PIC 999V99 VALUE ZERO.
        01 TOTAL-LINEAS PIC 99 VALUE ZERO.
+       01 LINEAS-TABLA PIC 999 VALUE ZERO.
 
        01 FECHA-INV1.
            03 ANIO PIC 9(4).
@@ -231,6 +232,20 @@
            02 PARTE-1 PIC X(26) VALUE 'Listado de horas aplicadas'.
            02 FILLER PIC X(27) VALUE SPACES.
 
+       01 REP-CONSULTOR-1.
+           02 FILLER PIC X(11) VALUE 'Consultor: '.
+           02 CONS-NUM PIC X(5) VALUE ZERO.
+           02 FILLER PIC X(10) VALUE SPACES.
+           02 FILLER PIC X(8) VALUE 'Nombre: '.
+           02 CONS-NOM PIC X(25) VALUE SPACES.
+           02 FILLER PIC X(21) VALUE SPACES.
+
+       01 REP-CONSULTOR-2.
+           02 FILLER PIC X(26) VALUE SPACES.
+           02 FILLER PIC X(12) VALUE 'Categoría: '.
+           02 CONS-CAT PIC X(20) VALUE SPACES.
+           02 FILLER PIC X(22) VALUE SPACES.
+
        01 REP-HEADER-TABLA.
            02 FILLER PIC X(5) VALUE SPACES.
            02 FILLER PIC X(5) VALUE 'Fecha'.
@@ -247,6 +262,40 @@
            02 FILLER PIC X(4) VALUE SPACES.
            02 FILLER PIC X(7) VALUE 'Importe'.
 
+       01 REP-FILA-TABLA.
+           02 FILLER PIC X VALUE SPACES.
+           02 REP-TABLA-FECHA PIC X(8) VALUE ZERO.
+           02 FILLER PIC X(3) VALUE SPACES.
+           02 REP-TABLA-EMPRESA PIC 9(3) VALUE ZERO.
+           02 FILLER PIC X(3) VALUE SPACES.
+           02 REP-TABLA-RS PIC X(25) VALUE SPACES.
+           02 FILLER PIC X(2) VALUE SPACES.
+           02 REP-TABLA-TIPO PIC X(10) VALUE SPACES.
+           02 FILLER PIC X(1) VALUE SPACES.
+           02 REP-TABLA-TARIFA PIC Z(3)9V99 VALUE ZERO.
+           02 FILLER PIC X(1) VALUE SPACES.
+           02 REP-TABLA-HS PIC Z9V99 VALUE ZERO.
+           02 FILLER PIC X(1) VALUE SPACES.
+           02 REP-TABLA-IMPORTE PIC Z(6)9V99 VALUE ZERO.
+
+       01 REP-TOTALES-FECHA.
+           02 FILLER PIC X(17) VALUE 'Totales por fecha'.
+           02 FILLER PIC X(43) VALUE SPACES.
+           02 REP-TOTAL-FECHA-HS PIC ZZ9V99 VALUE ZERO.
+           02 FILLER PIC X(3) VALUE SPACES.
+           02 REP-TOTAL-FECHA-IMP PIC Z(7)9V99.
+
+       01 REP-TOTALES-CONS.
+           02 FILLER PIC X(21) VALUE 'Totales por Consultor'.
+           02 FILLER PIC X(38) VALUE SPACES.
+           02 REP-TOTAL-CONS-HS PIC ZZZ9V99 VALUE ZERO.
+           02 FILLER PIC X(2) VALUE SPACES.
+           02 REP-TOTAL-CONS-IMP PIC Z(8)9V99.
+
+       01 REP-TOTALES-GRAL.
+           02 FILLER PIC X(21) VALUE 'Total general'.
+           02 FILLER PIC X(46) VALUE SPACES.
+           02 REP-TOTAL-GRAL-IMPORTE PIC Z(9)9V99 VALUE ZERO.
 
        PROCEDURE DIVISION.
 
@@ -485,6 +534,13 @@
 
       *******************************************************************
        IMPRIMIR-DATOS-CONSULTOR.
+           MOVE CONS-NUMERO TO CONS-NUM.
+           MOVE CONS-NOMBRE TO CONS-NOM.
+           MOVE CONS-SRT TO CONS-CAT.
+
+           WRITE LINEA FROM REP-CONSULTOR-1.
+           WRITE LINEA FROM REP-CONSULTOR-2 BEFORE 1.
+           ADD 3 TO TOTAL-LINEAS.
 
       *******************************************************************
        INICIALIZAR-TOTALES-CONSULTOR.
@@ -531,11 +587,13 @@
       *******************************************************************
        IMPRIMIR-HEADER-TABLA.
            WRITE LINEA FROM REP-HEADER-TABLA.
+           ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
        INICIALIZAR-TOTALES-FECHA.
            MOVE ZERO TO TOTAL-FECHA-IMPORTE.
            MOVE ZERO TO TOTAL-FECHA-HS.
+           MOVE ZERO TO LINEAS-TABLA.
 
       *******************************************************************
        PROCESAMIENTO-FECHA.
@@ -552,6 +610,27 @@
 
       *******************************************************************
        IMPRIMIR-FILA-TABLA.
+           PERFORM CHEQUEAR-CANT-LINEAS.
+           MOVE EMPRESA IN REG-MIN TO REP-TABLA-EMPRESA.
+           MOVE TIPO IN REG-MIN TO REP-TABLA-TIPO.
+           MOVE HORAS IN REG-MIN TO REP-TABLA-HS.
+
+           SET IND-TAR TO 1.
+           SEARCH ELEMENTO
+               AT END DISPLAY 'NO SE ENCONTRO LA TARIFA'
+               WHEN (CATEGORIA(IND-TAR) = CONS-SRT
+                   AND TIPO-TAR(IND-TAR) = TIPO IN REG-MIN)
+               NEXT SENTENCE
+               END-SEARCH.
+
+           MOVE TARIFA(IND-TAR) TO REP-TABLA-TARIFA.
+           COMPUTE REP-TABLA-IMPORTE =
+               TARIFA(IND-TAR) * HORAS IN REG-MIN.
+
+      * BUSCAR RAZON SOCIAL EN TABLA EMPRESAS.
+      * MOVER LA FECHA
+
+           ADD 1 TO LINEAS-TABLA.
 
       *******************************************************************
        ACTUALIZAR-TOTALES.
@@ -576,12 +655,26 @@
 
       *******************************************************************
        IMPRIMIR-TOTAL-FECHA.
+           MOVE TOTAL-FECHA-HS TO REP-TOTAL-FECHA-HS.
+           MOVE TOTAL-FECHA-IMPORTE TO REP-TOTAL-FECHA-IMP.
+           WRITE LINEA FROM REP-TOTALES-FECHA.
+           ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
        IMPRIMIR-TOTAL-CONSULTOR.
+           MOVE TOTAL-CONS-HS TO REP-TOTAL-CONS-HS.
+           MOVE TOTAL-CONS-IMPORTE TO REP-TOTAL-CONS-IMP.
+           WRITE LINEA FROM REP-TOTALES-CONS.
+           ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
        IMPRIMIR-TOTAL-GRAL.
+           MOVE TOTAL-GRAL-IMPORTE TO REP-TOTAL-GRAL-IMPORTE.
+           WRITE LINEA FROM REP-TOTALES-GRAL AFTER 1.
+           ADD 2 TO TOTAL-LINEAS.
+
+      *******************************************************************
+           CHEQUEAR-CANT-LINEAS.
 
       *******************************************************************
        CERRAR-ARCHIVOS.

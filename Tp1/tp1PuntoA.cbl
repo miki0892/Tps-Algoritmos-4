@@ -199,7 +199,8 @@
            03 HORAS PIC 9(2)V99.
            03 TIPO PIC 9.
 
-       01 TOTAL-GRAL-IMPORTE PIC Z(9)9V99 VALUE ZERO.
+       01 IMPORTE-AUX PIC 9(10)V99.
+       01 TOTAL-GRAL-IMPORTE PIC 9(10)V99 VALUE ZERO.
        01 TOTAL-HOJAS PIC 9(3) VALUE ZEROES.
        01 TOTAL-CONS-IMPORTE PIC 9(8)9V99 VALUE ZERO.
        01 TOTAL-CONS-HS PIC 9(3)9V99 VALUE ZERO.
@@ -586,6 +587,7 @@
 
       *******************************************************************
        IMPRIMIR-HEADER-TABLA.
+           PERFORM CHEQUEAR-CANT-LINEAS.
            WRITE LINEA FROM REP-HEADER-TABLA.
            ADD 1 TO TOTAL-LINEAS.
 
@@ -611,6 +613,7 @@
       *******************************************************************
        IMPRIMIR-FILA-TABLA.
            PERFORM CHEQUEAR-CANT-LINEAS.
+           MOVE FECHA IN REG-MIN TO REP-TABLA-FECHA.
            MOVE EMPRESA IN REG-MIN TO REP-TABLA-EMPRESA.
            MOVE TIPO IN REG-MIN TO REP-TABLA-TIPO.
            MOVE HORAS IN REG-MIN TO REP-TABLA-HS.
@@ -624,20 +627,27 @@
                END-SEARCH.
 
            MOVE TARIFA(IND-TAR) TO REP-TABLA-TARIFA.
-           COMPUTE REP-TABLA-IMPORTE =
+           COMPUTE IMPORTE-AUX =
                TARIFA(IND-TAR) * HORAS IN REG-MIN.
+           MOVE IMPORTE-AUX TO REP-TABLA-IMPORTE.
 
-      * BUSCAR RAZON SOCIAL EN TABLA EMPRESAS.
-      * MOVER LA FECHA
+           SET IND-EMP TO 1.
+           SEARCH EMPRESA IN TABLA-EMPRESAS
+               AT END DISPLAY 'NO SE ENCONTRO LA EMPRESA'
+               WHEN NUMERO-EMP(IND-EMP) = EMPRESA IN REG-MIN
+               NEXT SENTENCE
+               END-SEARCH.
 
+           MOVE RAZON-SOCIAL(IND-EMP) TO REP-TABLA-RS.
+
+           WRITE LINEA FROM REP-FILA-TABLA.
            ADD 1 TO LINEAS-TABLA.
 
       *******************************************************************
        ACTUALIZAR-TOTALES.
-      *    CALCULAR EL IMPORTE.
-      *     ADD IN REG-MIN TO TOTAL-GRAL-IMPORTE.
-      *     ADD TO TOTAL-CONS-IMPORTE.
-      *     ADD TO TOTAL-FECHA-IMPORTE.
+           ADD IMPORTE-AUX TO TOTAL-GRAL-IMPORTE.
+           ADD IMPORTE-AUX TO TOTAL-CONS-IMPORTE.
+           ADD IMPORTE-AUX TO TOTAL-FECHA-IMPORTE.
 
            ADD HORAS IN REG-MIN TO TOTAL-CONS-HS.
            ADD HORAS IN REG-MIN TO TOTAL-FECHA-HS.
@@ -657,6 +667,7 @@
        IMPRIMIR-TOTAL-FECHA.
            MOVE TOTAL-FECHA-HS TO REP-TOTAL-FECHA-HS.
            MOVE TOTAL-FECHA-IMPORTE TO REP-TOTAL-FECHA-IMP.
+           PERFORM CHEQUEAR-CANT-LINEAS.
            WRITE LINEA FROM REP-TOTALES-FECHA.
            ADD 1 TO TOTAL-LINEAS.
 
@@ -664,17 +675,21 @@
        IMPRIMIR-TOTAL-CONSULTOR.
            MOVE TOTAL-CONS-HS TO REP-TOTAL-CONS-HS.
            MOVE TOTAL-CONS-IMPORTE TO REP-TOTAL-CONS-IMP.
+           PERFORM CHEQUEAR-CANT-LINEAS.
            WRITE LINEA FROM REP-TOTALES-CONS.
            ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
        IMPRIMIR-TOTAL-GRAL.
            MOVE TOTAL-GRAL-IMPORTE TO REP-TOTAL-GRAL-IMPORTE.
+           PERFORM CHEQUEAR-CANT-LINEAS.
            WRITE LINEA FROM REP-TOTALES-GRAL AFTER 1.
            ADD 2 TO TOTAL-LINEAS.
 
       *******************************************************************
-           CHEQUEAR-CANT-LINEAS.
+       CHEQUEAR-CANT-LINEAS.
+           IF TOTAL-LINEAS = 60
+               PERFORM SALTAR-PAGINA.
 
       *******************************************************************
        CERRAR-ARCHIVOS.

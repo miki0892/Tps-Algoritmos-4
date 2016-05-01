@@ -26,6 +26,10 @@
                                ORGANIZATION IS LINE SEQUENTIAL
                                FILE STATUS IS FS-TIEMPOS.
 
+           SELECT TIEMPOS-NEW  ASSIGN TO DISK
+                               ORGANIZATION IS LINE SEQUENTIAL
+                               FILE STATUS IS FS-TIEMPOS-NEW.
+
            SELECT CONSULTORES  ASSIGN TO DISK
                                ORGANIZATION IS LINE SEQUENTIAL
                                FILE STATUS IS FS-CONSULTORES.
@@ -38,15 +42,22 @@
                                ORGANIZATION IS LINE SEQUENTIAL
                                FILE STATUS IS FS-TARIFAS.
 
+           SELECT LISTADO ASSIGN TO DISK
+                               ORGANIZATION IS LINE SEQUENTIAL
+                               FILE STATUS IS FS-LISTADO.
+
        DATA DIVISION.
        FILE SECTION.
        FD NOVTIMES1 LABEL RECORD IS STANDARD
                     VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
       -             'tmos-4/Tp1/Archivos de prueba/novTimes1.dat'.
 
-       01 NOV1-REG	.
+       01 NOV1-REG    .
            03 NOV1-NUMERO PIC X(5).
-           03 NOV1-FECHA PIC 9(8).
+           03 NOV1-FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
            03 NOV1-EMPRESA PIC 9(03).
            03 NOV1-TAREA PIC X(04).
            03 NOV1-HORAS PIC 9(2)V99.
@@ -56,9 +67,12 @@
        FD NOVTIMES2 LABEL RECORD IS STANDARD
                     VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
       -             'tmos-4/Tp1/Archivos de prueba/novTimes2.dat'.
-       01 NOV2-REG	.
+       01 NOV2-REG    .
            03 NOV2-NUMERO PIC X(5).
-           03 NOV2-FECHA PIC 9(8).
+           03 NOV2-FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
            03 NOV2-EMPRESA PIC 9(03).
            03 NOV2-TAREA PIC X(04).
            03 NOV2-HORAS PIC 9(2)V99.
@@ -67,9 +81,12 @@
        FD NOVTIMES3 LABEL RECORD IS STANDARD
                     VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
       -             'tmos-4/Tp1/Archivos de prueba/novTimes3.dat'.
-       01 NOV3-REG	.
+       01 NOV3-REG    .
            03 NOV3-NUMERO PIC X(5).
-           03 NOV3-FECHA PIC 9(8).
+           03 NOV3-FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
            03 NOV3-EMPRESA PIC 9(03).
            03 NOV3-TAREA PIC X(04).
            03 NOV3-HORAS PIC 9(2)V99.
@@ -80,10 +97,26 @@
       -            'mos-4/Tp1/Archivos de prueba/times.dat'.
        01 TIE-REG.
            03 TIE-NUMERO PIC X(5).
-           03 TIE-FECHA PIC 9(8).
+           03 TIE-FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
            03 TIE-EMPRESA PIC 9(03).
            03 TIE-TAREA PIC X(04).
            03 TIE-HORAS PIC 9(2)V99.
+
+       FD TIEMPOS-NEW LABEL RECORD IS STANDARD
+                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
+      -            'mos-4/Tp1/Archivos de prueba/timesNew.dat'.
+       01 TIE-NEW-REG.
+           03 TIE-NEW-NUMERO PIC X(5).
+           03 TIE-NEW-REG-FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
+           03 TIE-NEW-EMPRESA PIC 9(03).
+           03 TIE-NEW-TAREA PIC X(04).
+           03 TIE-NEW-HORAS PIC 9(2)V99.
 
        FD EMPRESAS LABEL RECORD IS STANDARD
                    VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
@@ -114,15 +147,22 @@
            03 TAR-TIPO PIC 9.
            03 TAR-TARIFA PIC 9(5)V99.
 
+       FD LISTADO LABEL RECORD IS STANDARD
+                  VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
+      -           'os-4/Tp1/Archivos de prueba/listado.dat'.
+       01 LINEA PIC X(80).
+
        WORKING-STORAGE SECTION.
 
        77 FS-CONSULTORES PIC XX.
        77 FS-TIEMPOS     PIC XX.
+       77 FS-TIEMPOS-NEW PIC XX.
        77 FS-NOVTIMES1   PIC XX.
        77 FS-NOVTIMES2   PIC XX.
        77 FS-NOVTIMES3   PIC XX.
        77 FS-EMPRESAS    PIC XX.
        77 FS-TARIFAS     PIC XX.
+       77 FS-LISTADO     PIC XX.
 
        01 TABLA-EMPRESAS.
            03 EMPRESA OCCURS 3 TIMES INDEXED BY IND-EMP.
@@ -142,7 +182,10 @@
 
        01 REG-MIN.
            03 NUMERO PIC X(5).
-           03 FECHA PIC 9(8).
+           03 FECHA.
+               05 DIA PIC 9(2).
+               05 MES PIC 9(2).
+               05 ANIO PIC 9(4).
            03 EMPRESA PIC 9(03).
            03 TAREA PIC X(04).
            03 HORAS PIC 9(2)V99.
@@ -156,13 +199,54 @@
            03 HORAS PIC 9(2)V99.
            03 TIPO PIC 9.
 
-       01 TOTAL-GRAL-IMPORTE PIC Z(9)9V99 VALUE ZEROES.
+       01 TOTAL-GRAL-IMPORTE PIC Z(9)9V99 VALUE ZERO.
        01 TOTAL-HOJAS PIC 9(3) VALUE ZEROES.
-       01 TOTAL-CONS-IMPORTE PIC Z(8)9V99 VALUE ZEROES.
-       01 TOTAL-CONS-HS PIC Z(3)9V99 VALUE ZEROES.
-       01 TOTAL-FECHA-IMPORTE PIC Z(7)9V99 VALUE ZEROES.
-       01 TOTAL-FECHA-HS PIC ZZ9V99 VALUE ZEROES.
-       01 TOTAL-LINEAS PIC 99 VALUE ZEROES.
+       01 TOTAL-CONS-IMPORTE PIC 9(8)9V99 VALUE ZERO.
+       01 TOTAL-CONS-HS PIC 9(3)9V99 VALUE ZERO.
+       01 TOTAL-FECHA-IMPORTE PIC 9(7)9V99 VALUE ZERO.
+       01 TOTAL-FECHA-HS PIC 999V99 VALUE ZERO.
+       01 TOTAL-LINEAS PIC 99 VALUE ZERO.
+
+       01 FECHA-INV1.
+           03 ANIO PIC 9(4).
+           03 MES PIC 9(2).
+           03 DIA PIC 9(2).
+       01 FECHA-INV2.
+           03 ANIO PIC 9(4).
+           03 MES PIC 9(2).
+           03 DIA PIC 9(2).
+
+       01 REP-LINEA1.
+           02 FILLER PIC X(8) VALUE 'Fecha: '.
+           02 REP-LINEA1-FECHA-DD PIC 9(2).
+           02 FILLER PIC X(1) VALUE '/'.
+           02 REP-LINEA1-FECHA-MM PIC 9(2).
+           02 FILLER PIC X(1) VALUE '/'.
+           02 REP-LINEA1-FECHA-AAAA PIC 9(4).
+           02 FILLER PIC X(50) VALUE SPACES.
+           02 REP-LINEA1-HOJA PIC 9(3) VALUE ZERO.
+
+       01 REP-TITULO.
+           02 FILLER PIC X(27) VALUE SPACES.
+           02 PARTE-1 PIC X(26) VALUE 'Listado de horas aplicadas'.
+           02 FILLER PIC X(27) VALUE SPACES.
+
+       01 REP-HEADER-TABLA.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(5) VALUE 'Fecha'.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(7) VALUE 'Empresa'.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(12) VALUE 'Razon social'.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(4) VALUE 'Tipo'.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(6) VALUE 'Tarifa'.
+           02 FILLER PIC X(5) VALUE SPACES.
+           02 FILLER PIC X(5) VALUE 'Horas'.
+           02 FILLER PIC X(4) VALUE SPACES.
+           02 FILLER PIC X(7) VALUE 'Importe'.
+
 
        PROCEDURE DIVISION.
 
@@ -185,6 +269,11 @@
            OPEN INPUT TIEMPOS.
            IF FS-TIEMPOS NOT = ZERO
                DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIEMPOS
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
+           OPEN OUTPUT TIEMPOS-NEW.
+           IF FS-TIEMPOS-NEW NOT = ZERO
+               DISPLAY "ERROR AL ABRIR TIMES NEW FS: " FS-TIEMPOS-NEW
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
            OPEN INPUT NOVTIMES1.
@@ -217,6 +306,11 @@
                DISPLAY "ERROR AL ABRIR TARIFAS FS: " FS-TARIFAS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
+           OPEN OUTPUT LISTADO.
+           IF FS-LISTADO NOT = ZERO
+               DISPLAY "ERROR AL ABRIR LISTADO FS: " FS-LISTADO
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
 
       *******************************************************************
        LEER-ARCHIVOS.
@@ -227,7 +321,6 @@
            PERFORM LEER-CONSULTORES.
            PERFORM LEER-EMPRESAS.
            PERFORM LEER-TARIFAS.
-
 
        LEER-TIEMPOS.
            READ TIEMPOS.
@@ -310,27 +403,42 @@
            PERFORM LEER-TARIFAS.
 
       *******************************************************************
-      * FALTA VER CÓMO COMPARAR LAS FECHAS. PODRÍA SER REORDENARLO COMO AAAAMMDD Y COMPARAR POR <
        BUSCAR-CLAVE-MINIMA.
            MOVE 1 TO ARCHIVO-MINIMO.
-           MOVE NOV1-REG	 TO REG-MIN.
+           MOVE NOV1-REG     TO REG-MIN.
+
+           MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
+           MOVE MES IN REG-MIN TO MES IN FECHA-INV1.
+           MOVE DIA IN REG-MIN TO DIA IN FECHA-INV1.
+
+           MOVE ANIO IN NOV2-FECHA TO ANIO IN FECHA-INV2.
+           MOVE MES IN NOV2-FECHA TO MES IN FECHA-INV2.
+           MOVE DIA IN NOV2-FECHA TO DIA IN FECHA-INV2.
 
            IF NOV2-NUMERO < NUMERO IN REG-MIN
                MOVE NOV2-REG TO REG-MIN
                MOVE 2 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV2-NUMERO = NUMERO IN REG-MIN) AND
-               NOV2-FECHA < FECHA IN REG-MIN
-                   MOVE NOV2-REG	 TO REG-MIN
+               (FECHA-INV2 < FECHA-INV1)
+                   MOVE NOV2-REG     TO REG-MIN
                    MOVE 2 TO ARCHIVO-MINIMO.
+
+           MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
+           MOVE MES IN REG-MIN TO MES IN FECHA-INV1.
+           MOVE DIA IN REG-MIN TO DIA IN FECHA-INV1.
+
+           MOVE ANIO IN NOV3-FECHA TO ANIO IN FECHA-INV2.
+           MOVE MES IN NOV3-FECHA TO MES IN FECHA-INV2.
+           MOVE DIA IN NOV3-FECHA TO DIA IN FECHA-INV2.
 
            IF NOV3-NUMERO < NUMERO IN REG-MIN
                MOVE NOV3-REG TO REG-MIN
                MOVE 3 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV3-NUMERO = NUMERO IN REG-MIN) AND
-               NOV3-FECHA < FECHA IN REG-MIN
-                   MOVE NOV3-REG	 TO REG-MIN
+               (FECHA-INV2 < FECHA-INV1)
+                   MOVE NOV3-REG     TO REG-MIN
                    MOVE 3 TO ARCHIVO-MINIMO.
 
       *******************************************************************
@@ -338,6 +446,7 @@
            PERFORM LEER-CONSULTORES UNTIL
                (CONS-NUMERO >= NUMERO IN REG-MIN) OR
                FS-CONSULTORES = 10.
+
       *******************************************************************
        PROCESAMIENTO-GRAL.
            PERFORM AVANZAR-CONSULTOR-DEL-TIMES.
@@ -356,10 +465,8 @@
                OR FS-TIEMPOS = 10.
 
        AVANZAR-TIMES.
-           PERFORM ESCRIBIR-EN-TIMES-NEW.
+           WRITE TIE-NEW-REG FROM TIE-REG.
            PERFORM LEER-TIEMPOS.
-
-       ESCRIBIR-EN-TIMES-NEW.
 
       *******************************************************************
        SALTAR-PAGINA.
@@ -368,11 +475,17 @@
            PERFORM IMPRIMIR-ENCABEZADO.
 
        IMPRIMIR-ENCABEZADO.
-      * LINEA DE LA FECHA Y LAS HOJAS
-      * LINEA 'LISTADO HORAS APLICADAS'
+           MOVE FUNCTION CURRENT-DATE(7:2) TO REP-LINEA1-FECHA-DD.
+           MOVE FUNCTION CURRENT-DATE(5:2) TO REP-LINEA1-FECHA-MM.
+           MOVE FUNCTION CURRENT-DATE(1:4) TO REP-LINEA1-FECHA-AAAA.
+           MOVE TOTAL-HOJAS TO REP-LINEA1-HOJA.
+           WRITE LINEA FROM REP-LINEA1.
+           WRITE LINEA FROM REP-TITULO BEFORE 1.
+           ADD 3 TO TOTAL-LINEAS.
 
       *******************************************************************
        IMPRIMIR-DATOS-CONSULTOR.
+
       *******************************************************************
        INICIALIZAR-TOTALES-CONSULTOR.
            MOVE ZERO TO TOTAL-CONS-IMPORTE.
@@ -391,9 +504,33 @@
 
       *******************************************************************
        AVANZAR-FECHA-DEL-TIMES.
+           MOVE ANIO IN TIE-FECHA TO ANIO IN FECHA-INV1.
+           MOVE MES IN TIE-FECHA TO MES IN FECHA-INV1.
+           MOVE DIA IN TIE-FECHA TO DIA IN FECHA-INV1.
+
+           MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV2.
+           MOVE MES IN REG-MIN TO MES IN FECHA-INV2.
+           MOVE DIA IN REG-MIN TO DIA IN FECHA-INV2.
+
+           PERFORM AVANZAR-TIMES-FECHA UNTIL
+               (TIE-NUMERO <> NUMERO IN REG-MIN
+               OR FECHA-INV1 > FECHA-INV2)
+               OR FS-TIEMPOS = 10.
+
+       AVANZAR-TIMES-FECHA.
+           WRITE TIE-NEW-REG FROM TIE-REG.
+           PERFORM LEER-TIEMPOS.
+
+           MOVE ANIO IN TIE-FECHA TO ANIO IN FECHA-INV1.
+           MOVE MES IN TIE-FECHA TO MES IN FECHA-INV1.
+           MOVE DIA IN TIE-FECHA TO DIA IN FECHA-INV1.
+           MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV2.
+           MOVE MES IN REG-MIN TO MES IN FECHA-INV2.
+           MOVE DIA IN REG-MIN TO DIA IN FECHA-INV2.
 
       *******************************************************************
        IMPRIMIR-HEADER-TABLA.
+           WRITE LINEA FROM REP-HEADER-TABLA.
 
       *******************************************************************
        INICIALIZAR-TOTALES-FECHA.
@@ -411,15 +548,31 @@
 
       *******************************************************************
        ESCRIBIR-MINIMO-EN-TIMES-NEW.
+           WRITE TIE-NEW-REG FROM REG-MIN.
 
       *******************************************************************
        IMPRIMIR-FILA-TABLA.
 
       *******************************************************************
        ACTUALIZAR-TOTALES.
+      *    CALCULAR EL IMPORTE.
+      *     ADD IN REG-MIN TO TOTAL-GRAL-IMPORTE.
+      *     ADD TO TOTAL-CONS-IMPORTE.
+      *     ADD TO TOTAL-FECHA-IMPORTE.
+
+           ADD HORAS IN REG-MIN TO TOTAL-CONS-HS.
+           ADD HORAS IN REG-MIN TO TOTAL-FECHA-HS.
 
       *******************************************************************
        LEER-DE-ARCHIVO-MIN.
+           IF ARCHIVO-MINIMO = 1
+               PERFORM LEER-NOVTIMES1.
+
+           IF ARCHIVO-MINIMO = 2
+               PERFORM LEER-NOVTIMES2.
+
+           IF ARCHIVO-MINIMO = 3
+               PERFORM LEER-NOVTIMES3.
 
       *******************************************************************
        IMPRIMIR-TOTAL-FECHA.
@@ -433,6 +586,6 @@
       *******************************************************************
        CERRAR-ARCHIVOS.
            CLOSE TIEMPOS NOVTIMES1 NOVTIMES2 NOVTIMES3 CONSULTORES
-           EMPRESAS TARIFAS.
+           EMPRESAS TARIFAS TIEMPOS-NEW LISTADO.
 
        END PROGRAM TP1-PUNTO-A.

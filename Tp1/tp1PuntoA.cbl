@@ -8,6 +8,8 @@
        PROGRAM-ID. TP1-PUNTO-A.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT NOVTIMES1    ASSIGN TO DISK
@@ -41,6 +43,14 @@
            SELECT TARIFAS      ASSIGN TO DISK
                                ORGANIZATION IS LINE SEQUENTIAL
                                FILE STATUS IS FS-TARIFAS.
+
+           SELECT TIPOS        ASSIGN TO DISK
+                               ORGANIZATION IS LINE SEQUENTIAL
+                               FILE STATUS IS FS-TIPOS.
+
+           SELECT CATEGORIAS   ASSIGN TO DISK
+                               ORGANIZATION IS LINE SEQUENTIAL
+                               FILE STATUS IS FS-CATEGORIAS.
 
            SELECT LISTADO ASSIGN TO DISK
                                ORGANIZATION IS LINE SEQUENTIAL
@@ -147,6 +157,20 @@
            03 TAR-TIPO PIC 99.
            03 TAR-TARIFA PIC 9(5)V99.
 
+       FD TIPOS LABEL RECORD IS STANDARD
+                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
+      -            'mos-4/Tp1/Archivos de prueba/tipos.dat'.
+       01 TIP-REG.
+           03 TIP-TIPO PIC X(02).
+           03 TIP-DESC PIC X(10).
+
+       FD CATEGORIAS LABEL RECORD IS STANDARD
+                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
+      -            'mos-4/Tp1/Archivos de prueba/categorias.dat'.
+       01 CAT-REG.
+           03 CAT-SRT PIC X(02).
+           03 CAT-DESC PIC X(20).
+
        FD LISTADO LABEL RECORD IS STANDARD
                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
       -           'os-4/Tp1/Archivos de prueba/listado.dat'.
@@ -162,6 +186,8 @@
        77 FS-NOVTIMES3   PIC XX.
        77 FS-EMPRESAS    PIC XX.
        77 FS-TARIFAS     PIC XX.
+       77 FS-TIPOS       PIC XX.
+       77 FS-CATEGORIAS  PIC XX.
        77 FS-LISTADO     PIC XX.
 
        01 TABLA-EMPRESAS.
@@ -174,6 +200,16 @@
                05 CATEGORIA PIC X(02).
                05 TIPO-TAR PIC 99.
                05 TARIFA PIC 9(5)V99.
+
+       01 TABLA-TIPOS.
+           03 LINEA-TIPO OCCURS 3 TIMES INDEXED BY IND-TIP.
+               05 TAB-TIPO PIC X(02).
+               05 DESCRIPCION PIC X(10).
+
+       01 TABLA-CATEGORIAS.
+           03 LINEA-CATEGORIA OCCURS 30 TIMES INDEXED BY IND-CAT.
+               05 TAB-CAT PIC X(02).
+               05 TAB-CAT-DESC PIC X(20).
 
        01 ARCHIVO-MINIMO PIC 9.
 
@@ -226,6 +262,7 @@
            02 FILLER PIC X(1) VALUE '/'.
            02 REP-LINEA1-FECHA-AAAA PIC 9(4).
            02 FILLER PIC X(50) VALUE SPACES.
+           02 FILLER PIC X(5) VALUE 'Hoja '.
            02 REP-LINEA1-HOJA PIC 9(3) VALUE ZERO.
 
        01 REP-TITULO.
@@ -248,35 +285,33 @@
            02 FILLER PIC X(22) VALUE SPACES.
 
        01 REP-HEADER-TABLA.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(5) VALUE 'Fecha'.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(7) VALUE 'Empresa'.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(12) VALUE 'Razon social'.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(4) VALUE 'Tipo'.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(6) VALUE 'Tarifa'.
-           02 FILLER PIC X(5) VALUE SPACES.
-           02 FILLER PIC X(5) VALUE 'Horas'.
-           02 FILLER PIC X(4) VALUE SPACES.
-           02 FILLER PIC X(7) VALUE 'Importe'.
+           02 FILLER PIC X(9) VALUE 'Fecha'.
+           02 FILLER PIC X(8) VALUE 'Empresa'.
+           02 FILLER PIC X(24) VALUE 'Razon social'.
+           02 FILLER PIC X(11) VALUE 'Tipo'.
+           02 FILLER PIC X(9) VALUE 'Tarifa'.
+           02 FILLER PIC X(8) VALUE 'Horas'.
+           02 FILLER PIC X(12) VALUE 'Importe'.
 
        01 REP-FILA-TABLA.
-           02 FILLER PIC X VALUE SPACES.
            02 REP-TABLA-FECHA PIC X(8) VALUE ZERO.
            02 FILLER PIC X(3) VALUE SPACES.
+
            02 REP-TABLA-EMPRESA PIC 9(3) VALUE ZERO.
-           02 FILLER PIC X(3) VALUE SPACES.
+           02 FILLER PIC X VALUE SPACES.
+
            02 REP-TABLA-RS PIC X(25) VALUE SPACES.
-           02 FILLER PIC X(2) VALUE SPACES.
+           02 FILLER PIC X VALUE SPACES.
+
            02 REP-TABLA-TIPO PIC X(10) VALUE SPACES.
-           02 FILLER PIC X(1) VALUE SPACES.
+           02 FILLER PIC X VALUE SPACES.
+
            02 REP-TABLA-TARIFA PIC Z(3)9V99 VALUE ZERO.
-           02 FILLER PIC X(1) VALUE SPACES.
+           02 FILLER PIC X VALUE SPACES.
+
            02 REP-TABLA-HS PIC Z9V99 VALUE ZERO.
-           02 FILLER PIC X(1) VALUE SPACES.
+           02 FILLER PIC X VALUE SPACES.
+
            02 REP-TABLA-IMPORTE PIC Z(6)9V99 VALUE ZERO.
 
        01 REP-TOTALES-FECHA.
@@ -297,6 +332,12 @@
            02 FILLER PIC X(21) VALUE 'Total general'.
            02 FILLER PIC X(46) VALUE SPACES.
            02 REP-TOTAL-GRAL-IMPORTE PIC Z(9)9V99 VALUE ZERO.
+
+       01 LINEA-VACIA PIC X(80) VALUE SPACES.
+       01 LINEA-GUION PIC X(80) VALUE ALL "-".
+       01 LINEA-TOTALES-FECHA.
+           02 FILLER PIC X(60) VALUE SPACES.
+           02 FILLER PIC X(20) VALUE ALL "-".
 
        PROCEDURE DIVISION.
 
@@ -358,6 +399,16 @@
                DISPLAY "ERROR AL ABRIR TARIFAS FS: " FS-TARIFAS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
+           OPEN INPUT TIPOS.
+           IF FS-TIPOS NOT = ZERO
+               DISPLAY "ERROR AL ABRIR TIPOS FS: " FS-TIPOS
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
+           OPEN INPUT CATEGORIAS.
+           IF FS-CATEGORIAS NOT = ZERO
+               DISPLAY "ERROR AL ABRIR CATEGORIAS FS: " FS-CATEGORIAS
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
            OPEN OUTPUT LISTADO.
            IF FS-LISTADO NOT = ZERO
                DISPLAY "ERROR AL ABRIR LISTADO FS: " FS-LISTADO
@@ -373,6 +424,8 @@
            PERFORM LEER-CONSULTORES.
            PERFORM LEER-EMPRESAS.
            PERFORM LEER-TARIFAS.
+           PERFORM LEER-TIPOS.
+           PERFORM LEER-CATEGORIAS.
 
        LEER-TIEMPOS.
            READ TIEMPOS.
@@ -430,10 +483,26 @@
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
 
+       LEER-TIPOS.
+           READ TIPOS.
+           IF FS-TIPOS NOT = ZERO AND 10
+               DISPLAY "ERROR AL LEER TIPOS FS: " FS-TIPOS
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
+
+       LEER-CATEGORIAS.
+           READ CATEGORIAS.
+           IF FS-CATEGORIAS NOT = ZERO AND 10
+               DISPLAY "ERROR AL LEER CATEGORIAS FS: " FS-CATEGORIAS
+               PERFORM CERRAR-ARCHIVOS
+               STOP RUN.
+
       *******************************************************************
        CARGAR-TABLAS.
            PERFORM CARGAR-TABLA-EMPRESAS.
            PERFORM CARGAR-TABLA-TARIFAS.
+           PERFORM CARGAR-TABLA-TIPOS.
+           PERFORM CARGAR-TABLA-CATEGORIAS.
 
        CARGAR-TABLA-EMPRESAS.
            PERFORM CARGAR-EMPRESAS VARYING IND-EMP FROM 1 BY 1
@@ -453,6 +522,24 @@
            MOVE TAR-TIPO TO TIPO-TAR(IND-TAR).
            MOVE TAR-TARIFA TO TARIFA(IND-TAR).
            PERFORM LEER-TARIFAS.
+
+       CARGAR-TABLA-TIPOS.
+           PERFORM CARGAR-TIPOS VARYING IND-TIP FROM 1 BY 1
+               UNTIL FS-TIPOS = '10'.
+
+       CARGAR-TIPOS.
+           MOVE TIP-TIPO TO TAB-TIPO(IND-TIP).
+           MOVE TIP-DESC TO DESCRIPCION(IND-TIP).
+           PERFORM LEER-TIPOS.
+
+       CARGAR-TABLA-CATEGORIAS.
+           PERFORM CARGAR-CATEGORIAS VARYING IND-CAT FROM 1 BY 1
+               UNTIL FS-CATEGORIAS = '10'.
+
+       CARGAR-CATEGORIAS.
+           MOVE CAT-SRT TO TAB-CAT(IND-CAT).
+           MOVE CAT-DESC TO TAB-CAT-DESC(IND-CAT).
+           PERFORM LEER-CATEGORIAS.
 
       *******************************************************************
        BUSCAR-CLAVE-MINIMA.
@@ -536,17 +623,28 @@
            MOVE FUNCTION CURRENT-DATE(1:4) TO REP-LINEA1-FECHA-AAAA.
            MOVE TOTAL-HOJAS TO REP-LINEA1-HOJA.
            WRITE LINEA FROM REP-LINEA1.
-           WRITE LINEA FROM REP-TITULO BEFORE 1.
+           WRITE LINEA FROM REP-TITULO.
+           WRITE LINEA FROM LINEA-VACIA.
            ADD 3 TO TOTAL-LINEAS.
 
       *******************************************************************
        IMPRIMIR-DATOS-CONSULTOR.
            MOVE CONS-NUMERO TO CONS-NUM.
            MOVE CONS-NOMBRE TO CONS-NOM.
-           MOVE CONS-SRT TO CONS-CAT.
+
+
+           SET IND-CAT TO 1.
+           SEARCH LINEA-CATEGORIA
+               AT END DISPLAY 'NO SE ENCONTRO LA DESC. DE LA CATEGORIA'
+               WHEN (TAB-CAT(IND-CAT) = CONS-SRT)
+               NEXT SENTENCE
+               END-SEARCH.
+
+           MOVE TAB-CAT-DESC(IND-CAT) TO CONS-CAT.
 
            WRITE LINEA FROM REP-CONSULTOR-1.
-           WRITE LINEA FROM REP-CONSULTOR-2 BEFORE 1.
+           WRITE LINEA FROM REP-CONSULTOR-2.
+           WRITE LINEA FROM LINEA-VACIA.
            ADD 3 TO TOTAL-LINEAS.
 
       *******************************************************************
@@ -600,6 +698,10 @@
            WRITE LINEA FROM REP-HEADER-TABLA.
            ADD 1 TO TOTAL-LINEAS.
 
+           PERFORM CHEQUEAR-CANT-LINEAS.
+           WRITE LINEA FROM LINEA-GUION.
+           ADD 1 TO TOTAL-LINEAS.
+
       *******************************************************************
        INICIALIZAR-TOTALES-FECHA.
            MOVE ZERO TO TOTAL-FECHA-IMPORTE.
@@ -625,8 +727,16 @@
            PERFORM CHEQUEAR-CANT-LINEAS.
            MOVE FECHA IN REG-MIN TO REP-TABLA-FECHA.
            MOVE EMPRESA IN REG-MIN TO REP-TABLA-EMPRESA.
-           MOVE TIPO IN REG-MIN TO REP-TABLA-TIPO.
            MOVE HORAS IN REG-MIN TO REP-TABLA-HS.
+
+           SET IND-TIP TO 1.
+           SEARCH LINEA-TIPO
+               AT END DISPLAY 'NO SE ENCONTRO LA DESC. DEL TIPO'
+               WHEN (TAB-TIPO(IND-TIP) = TIPO IN REG-MIN)
+               NEXT SENTENCE
+               END-SEARCH.
+
+           MOVE DESCRIPCION(IND-TIP) TO REP-TABLA-TIPO.
 
            SET IND-TAR TO 1.
            SEARCH ELEMENTO
@@ -677,8 +787,17 @@
        IMPRIMIR-TOTAL-FECHA.
            MOVE TOTAL-FECHA-HS TO REP-TOTAL-FECHA-HS.
            MOVE TOTAL-FECHA-IMPORTE TO REP-TOTAL-FECHA-IMP.
+
+           PERFORM CHEQUEAR-CANT-LINEAS.
+           WRITE LINEA FROM LINEA-TOTALES-FECHA.
+           ADD 1 TO TOTAL-LINEAS.
+
            PERFORM CHEQUEAR-CANT-LINEAS.
            WRITE LINEA FROM REP-TOTALES-FECHA.
+           ADD 1 TO TOTAL-LINEAS.
+
+           PERFORM CHEQUEAR-CANT-LINEAS.
+           WRITE LINEA FROM LINEA-VACIA.
            ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
@@ -693,8 +812,12 @@
        IMPRIMIR-TOTAL-GRAL.
            MOVE TOTAL-GRAL-IMPORTE TO REP-TOTAL-GRAL-IMPORTE.
            PERFORM CHEQUEAR-CANT-LINEAS.
-           WRITE LINEA FROM REP-TOTALES-GRAL AFTER 1.
-           ADD 2 TO TOTAL-LINEAS.
+           WRITE LINEA FROM LINEA-VACIA.
+           ADD 1 TO TOTAL-LINEAS.
+
+           PERFORM CHEQUEAR-CANT-LINEAS.
+           WRITE LINEA FROM REP-TOTALES-GRAL.
+           ADD 1 TO TOTAL-LINEAS.
 
       *******************************************************************
        CHEQUEAR-CANT-LINEAS.
@@ -704,6 +827,6 @@
       *******************************************************************
        CERRAR-ARCHIVOS.
            CLOSE TIEMPOS NOVTIMES1 NOVTIMES2 NOVTIMES3 CONSULTORES
-           EMPRESAS TARIFAS TIEMPOS-NEW LISTADO.
+           EMPRESAS TARIFAS TIEMPOS-NEW LISTADO TIPOS CATEGORIAS.
 
        END PROGRAM TP1-PUNTO-A.

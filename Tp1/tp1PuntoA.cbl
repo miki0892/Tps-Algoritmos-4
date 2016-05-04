@@ -227,14 +227,6 @@
            03 HORAS PIC 9(2)V99.
            03 TIPO PIC 99.
 
-       01 REG-MIN-ANT.
-           03 NUMERO PIC X(5).
-           03 FECHA PIC 9(8).
-           03 EMPRESA PIC 9(03).
-           03 TAREA PIC X(04).
-           03 HORAS PIC 9(2)V99.
-           03 TIPO PIC 99.
-
        01 IMPORTE-AUX PIC 9(10)V99.
        01 TOTAL-GRAL-IMPORTE PIC 9(10)V99 VALUE ZERO.
        01 TOTAL-HOJAS PIC 9(3) VALUE ZEROES.
@@ -339,6 +331,9 @@
            02 FILLER PIC X(60) VALUE SPACES.
            02 FILLER PIC X(20) VALUE ALL "-".
 
+       01 NUMERO-MIN-ANT PIC X(5) VALUE ZERO.
+       01 FECHA-MIN-ANT PIC X(8) VALUE ZERO.
+
        PROCEDURE DIVISION.
 
        MAIN-PROCEDURE.
@@ -346,13 +341,14 @@
            PERFORM LEER-ARCHIVOS.
            PERFORM CARGAR-TABLAS.
            PERFORM BUSCAR-CLAVE-MINIMA.
-           MOVE REG-MIN TO REG-MIN-ANT.
+      *     MOVE NUMERO IN REG-MIN TO NUMERO-MIN-ANT.
+      *     MOVE FECHA IN REG-MIN TO FECHA-MIN-ANT.
            PERFORM AVANZAR-CONSULTOR.
-           PERFORM PROCESAMIENTO-GRAL UNTIL FS-NOVTIMES1 = 10
-               AND FS-NOVTIMES2 = 10
-               AND FS-NOVTIMES3 = 10.
+           PERFORM PROCESAMIENTO-GRAL UNTIL FS-NOVTIMES1 = '10'
+               AND FS-NOVTIMES2 = '10'
+               AND FS-NOVTIMES3 = '10'.
       * CHEQUEAR SI ESTO ESTÁ BIEN: AVANZAR HASTA TERMINAR TIMES
-           PERFORM AVANZAR-TIMES UNTIL FS-TIEMPOS = 10.
+           PERFORM AVANZAR-TIMES UNTIL FS-TIEMPOS = '10'.
            PERFORM IMPRIMIR-TOTAL-GRAL.
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
@@ -429,41 +425,41 @@
 
        LEER-TIEMPOS.
            READ TIEMPOS.
-           IF FS-TIEMPOS NOT = ZERO AND 10
+           IF FS-TIEMPOS NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER TIMES FS: " FS-TIEMPOS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
 
        LEER-NOVTIMES1.
            READ NOVTIMES1.
-           IF FS-NOVTIMES1 NOT = ZERO AND 10
+           IF FS-NOVTIMES1 NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER NOVTIMES1 FS: " FS-NOVTIMES1
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
-           IF FS-NOVTIMES1 = 10
+           IF FS-NOVTIMES1 = '10'
                MOVE 1 TO FS-ARCHIVOS(1).
 
        LEER-NOVTIMES2.
            READ NOVTIMES2.
-           IF FS-NOVTIMES2 NOT = ZERO AND 10
+           IF FS-NOVTIMES2 NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER NOVTIMES2 FS: " FS-NOVTIMES2
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
-           IF FS-NOVTIMES2 = 10
+           IF FS-NOVTIMES2 = '10'
                MOVE 1 TO FS-ARCHIVOS(2).
 
        LEER-NOVTIMES3.
            READ NOVTIMES3.
-           IF FS-NOVTIMES3 NOT = ZERO AND 10
+           IF FS-NOVTIMES3 NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER NOVTIMES3 FS: " FS-NOVTIMES3
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
-           IF FS-NOVTIMES3 = 10
+           IF FS-NOVTIMES3 = '10'
                MOVE 1 TO FS-ARCHIVOS(3).
 
        LEER-CONSULTORES.
            READ CONSULTORES.
-           IF FS-CONSULTORES NOT = ZERO AND 10
+           IF FS-CONSULTORES NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER CONSULTORES FS: "
       -            FS-CONSULTORES
                PERFORM CERRAR-ARCHIVOS
@@ -471,28 +467,28 @@
 
        LEER-EMPRESAS.
            READ EMPRESAS.
-           IF FS-EMPRESAS NOT = ZERO AND 10
+           IF FS-EMPRESAS NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER EMPRESAS FS: " FS-EMPRESAS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
 
        LEER-TARIFAS.
            READ TARIFAS.
-           IF FS-TARIFAS NOT = ZERO AND 10
+           IF FS-TARIFAS NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER TARIFAS FS: " FS-TARIFAS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
 
        LEER-TIPOS.
            READ TIPOS.
-           IF FS-TIPOS NOT = ZERO AND 10
+           IF FS-TIPOS NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER TIPOS FS: " FS-TIPOS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
 
        LEER-CATEGORIAS.
            READ CATEGORIAS.
-           IF FS-CATEGORIAS NOT = ZERO AND 10
+           IF FS-CATEGORIAS NOT = ZERO AND '10'
                DISPLAY "ERROR AL LEER CATEGORIAS FS: " FS-CATEGORIAS
                PERFORM CERRAR-ARCHIVOS
                STOP RUN.
@@ -559,7 +555,7 @@
                MOVE 2 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV2-NUMERO = NUMERO IN REG-MIN) AND
-               (FECHA-INV2 < FECHA-INV1)
+               (FECHA-INV2 < FECHA-INV1) AND FS-ARCHIVOS(2) NOT = 1
                    MOVE NOV2-REG TO REG-MIN
                    MOVE 2 TO ARCHIVO-MINIMO.
 
@@ -577,7 +573,7 @@
                    MOVE 3 TO ARCHIVO-MINIMO
            ELSE
                IF (NOV3-NUMERO = NUMERO IN REG-MIN) AND
-               (FECHA-INV2 < FECHA-INV1)
+               (FECHA-INV2 < FECHA-INV1) AND FS-ARCHIVOS(3) NOT = 1
                    MOVE NOV3-REG TO REG-MIN
                    MOVE 3 TO ARCHIVO-MINIMO.
 
@@ -585,7 +581,7 @@
        AVANZAR-CONSULTOR.
            PERFORM LEER-CONSULTORES UNTIL
                (CONS-NUMERO NOT < NUMERO IN REG-MIN) OR
-               FS-CONSULTORES = 10.
+               FS-CONSULTORES = '10'.
 
       *******************************************************************
        PROCESAMIENTO-GRAL.
@@ -593,19 +589,19 @@
            PERFORM SALTAR-PAGINA.
            PERFORM IMPRIMIR-DATOS-CONSULTOR.
            PERFORM INICIALIZAR-TOTALES-CONSULTOR.
+           MOVE NUMERO IN REG-MIN TO NUMERO-MIN-ANT.
            PERFORM PROCESAMIENTO-CONSULTOR
-               UNTIL (NUMERO IN REG-MIN NOT = NUMERO IN REG-MIN-ANT)
+               UNTIL (NUMERO IN REG-MIN NOT = NUMERO-MIN-ANT)
                OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
            PERFORM IMPRIMIR-TOTAL-CONSULTOR.
            PERFORM AVANZAR-CONSULTOR.
            PERFORM AVANZAR-CONSULTOR-DEL-TIMES.
-           MOVE REG-MIN TO REG-MIN-ANT.
 
       *******************************************************************
        AVANZAR-CONSULTOR-DEL-TIMES.
            PERFORM AVANZAR-TIMES UNTIL
                (TIE-NUMERO NOT < NUMERO IN REG-MIN)
-               OR (FS-TIEMPOS = 10).
+               OR (FS-TIEMPOS = '10').
 
        AVANZAR-TIMES.
            WRITE TIE-NEW-REG FROM TIE-REG.
@@ -660,14 +656,13 @@
            PERFORM AVANZAR-FECHA-DEL-TIMES.
            PERFORM IMPRIMIR-HEADER-TABLA.
            PERFORM INICIALIZAR-TOTALES-FECHA.
+           MOVE FECHA IN REG-MIN TO FECHA-MIN-ANT.
            PERFORM PROCESAMIENTO-FECHA UNTIL
-               (NUMERO IN REG-MIN NOT = NUMERO IN REG-MIN-ANT
-               OR FECHA IN REG-MIN NOT = FECHA IN REG-MIN-ANT)
-               OR (FS-ARCHIVOS(ARCHIVO-MINIMO) = 1).
+               NUMERO IN REG-MIN NOT = NUMERO-MIN-ANT
+               OR FECHA IN REG-MIN NOT = FECHA-MIN-ANT
+               OR FS-ARCHIVOS(ARCHIVO-MINIMO) = 1.
            PERFORM IMPRIMIR-TOTAL-FECHA.
            PERFORM AVANZAR-FECHA-DEL-TIMES.
-           IF NUMERO IN REG-MIN = NUMERO IN REG-MIN-ANT
-               MOVE REG-MIN TO REG-MIN-ANT.
 
       *******************************************************************
        AVANZAR-FECHA-DEL-TIMES.
@@ -682,7 +677,7 @@
            PERFORM AVANZAR-TIMES-FECHA UNTIL
                TIE-NUMERO NOT = NUMERO IN REG-MIN
                OR FECHA-INV1 > FECHA-INV2
-               OR FS-TIEMPOS = 10.
+               OR FS-TIEMPOS = '10'.
 
        AVANZAR-TIMES-FECHA.
            WRITE TIE-NEW-REG FROM TIE-REG.
@@ -716,7 +711,6 @@
            PERFORM ESCRIBIR-MINIMO-EN-TIMES-NEW.
            PERFORM IMPRIMIR-FILA-TABLA.
            PERFORM ACTUALIZAR-TOTALES.
-           MOVE REG-MIN TO REG-MIN-ANT.
            PERFORM LEER-DE-ARCHIVO-MIN.
            PERFORM BUSCAR-CLAVE-MINIMA.
 

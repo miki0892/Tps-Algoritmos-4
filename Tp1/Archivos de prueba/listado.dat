@@ -1,4 +1,4 @@
-Fecha:  02/05/2016                                                  Hoja 001
+Fecha:  04/05/2016                                                  Hoja 001
                            Listado de horas aplicadas
 
 Consultor: 00010          Nombre: Javier Ugarte
@@ -29,7 +29,7 @@ Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
 Totales por fecha                                            2000     22222220
 
 Totales por Consultor                                        6100    254444418
-Fecha:  02/05/2016                                                  Hoja 002
+Fecha:  04/05/2016                                                  Hoja 002
                            Listado de horas aplicadas
 
 Consultor: 00011          Nombre: Miki Perez
@@ -72,7 +72,7 @@ Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
 Totales por fecha                                            1050     23333331
 
 Totales por Consultor                                        6300    139999984
-Fecha:  02/05/2016                                                  Hoja 003
+Fecha:  04/05/2016                                                  Hoja 003
                            Listado de horas aplicadas
 
 Consultor: 00012          Nombre: Lula Julia
@@ -90,6 +90,24 @@ Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
                                                             --------------------
 Totales por fecha                                            1050     58333327
 
-Totales por Consultor                                        2100    128333320
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01022020   003 ILOLAY S.A.               Extra      666666 1050  69999993
+                                                            --------------------
+Totales por fecha                                            1050     69999993
 
-Total general                                                         522777722
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01022021   003 ILOLAY S.A.               Extra      666666 1050  69999993
+                                                            --------------------
+Totales por fecha                                            1050     69999993
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01022022   003 ILOLAY S.A.               Extra      666666 1050  69999993
+                                                            --------------------
+Totales por fecha                                            1050     69999993
+
+Totales por Consultor                                        5250    338333299
+
+Total general                                                         732777701

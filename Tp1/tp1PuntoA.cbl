@@ -539,25 +539,25 @@
 
       *******************************************************************
        BUSCAR-CLAVE-MINIMA.
-           MOVE 1 TO ARCHIVO-MINIMO.
-           MOVE NOV1-REG TO REG-MIN.
+           IF FS-ARCHIVOS(1) NOT = 1
+               MOVE 1 TO ARCHIVO-MINIMO
+               MOVE NOV1-REG TO REG-MIN.
 
            MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
            MOVE MES IN REG-MIN TO MES IN FECHA-INV1.
            MOVE DIA IN REG-MIN TO DIA IN FECHA-INV1.
-
            MOVE ANIO IN NOV2-FECHA TO ANIO IN FECHA-INV2.
            MOVE MES IN NOV2-FECHA TO MES IN FECHA-INV2.
            MOVE DIA IN NOV2-FECHA TO DIA IN FECHA-INV2.
 
-           IF NOV2-NUMERO < NUMERO IN REG-MIN OR FS-ARCHIVOS(1) = 1
-               MOVE NOV2-REG TO REG-MIN
+           IF FS-ARCHIVOS(2) NOT = 1 AND
+               ( FS-ARCHIVOS(1) = 1 OR
+               NOV2-NUMERO < NUMERO IN REG-MIN OR
+               ( NOV2-NUMERO = NUMERO IN REG-MIN AND
+               FECHA-INV2 < FECHA-INV1 ) )
+
                MOVE 2 TO ARCHIVO-MINIMO
-           ELSE
-               IF (NOV2-NUMERO = NUMERO IN REG-MIN) AND
-               (FECHA-INV2 < FECHA-INV1) AND FS-ARCHIVOS(2) NOT = 1
-                   MOVE NOV2-REG TO REG-MIN
-                   MOVE 2 TO ARCHIVO-MINIMO.
+               MOVE NOV2-REG TO REG-MIN.
 
            MOVE ANIO IN REG-MIN TO ANIO IN FECHA-INV1.
            MOVE MES IN REG-MIN TO MES IN FECHA-INV1.
@@ -567,15 +567,14 @@
            MOVE MES IN NOV3-FECHA TO MES IN FECHA-INV2.
            MOVE DIA IN NOV3-FECHA TO DIA IN FECHA-INV2.
 
-           IF NOV3-NUMERO < NUMERO IN REG-MIN
-               OR ( FS-ARCHIVOS(1) = 1 AND FS-ARCHIVOS(2) = 1)
-                   MOVE NOV3-REG TO REG-MIN
-                   MOVE 3 TO ARCHIVO-MINIMO
-           ELSE
-               IF (NOV3-NUMERO = NUMERO IN REG-MIN) AND
-               (FECHA-INV2 < FECHA-INV1) AND FS-ARCHIVOS(3) NOT = 1
-                   MOVE NOV3-REG TO REG-MIN
-                   MOVE 3 TO ARCHIVO-MINIMO.
+           IF FS-ARCHIVOS(3) NOT = 1 AND
+               ( ( FS-ARCHIVOS(1) = 1 AND FS-ARCHIVOS(2) = 1 ) OR
+               NOV3-NUMERO < NUMERO IN REG-MIN OR
+               ( NOV3-NUMERO = NUMERO IN REG-MIN AND
+               FECHA-INV2 < FECHA-INV1 ) )
+
+               MOVE 3 TO ARCHIVO-MINIMO
+               MOVE NOV3-REG TO REG-MIN.
 
       *******************************************************************
        AVANZAR-CONSULTOR.

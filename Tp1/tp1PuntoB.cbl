@@ -70,13 +70,13 @@
            03 EMPRESA OCCURS 3 TIMES.
                05 ANIO OCCURS 5 TIMES.
                    07 MES OCCURS 12 TIMES.
-                       09 HORAS-ACUMU PIC 9(3) VALUE ZERO.
-                   07 TOTAL-ANIO PIC 9(4) VALUE ZERO.
+                       09 HORAS-ACUMU PIC 9(3)V99 VALUE ZERO.
+                   07 TOTAL-ANIO PIC 9(4)V99 VALUE ZERO.
 
        01 TABLA-TOTAL-MESES.
            03 MES OCCURS 12 TIMES.
-              05 HORAS-ACUM PIC 9(3) VALUE ZERO.
-           03 TOTAL-MESES PIC 9(4) VALUE ZERO.
+              05 HORAS-ACUM PIC 9(3)V99 VALUE ZERO.
+           03 TOTAL-MESES PIC 9(4)V99 VALUE ZERO.
 
        01 ANIO-CORRIENTE PIC 9(4).
        01 MES-CORRIENTE PIC 9(2).

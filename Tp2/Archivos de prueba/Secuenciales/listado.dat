@@ -1,0 +1,113 @@
+Fecha:  06/05/2016                                                  Hoja 001
+                           Listado de horas aplicadas
+
+Consultor: 00010          Nombre: Javier Ugarte
+                          Categoría: Categoria tres
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/01/2011 002 LA SERENISIMA S.A.        Normal     9999,99  10,50   1049999,89
+                                                            --------------------
+Totales por fecha                                            10,50   1049999,89
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+10/01/2011 002 LA SERENISIMA S.A.        Normal     9999,99  10,50   1049999,89
+                                                            --------------------
+Totales por fecha                                            10,50   1049999,89
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+03/02/2011 001 ARCOR S.A.                Extra      1111,11  20,00    222222,20
+                                                            --------------------
+Totales por fecha                                            20,00    222222,20
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+25/02/2011 002 LA SERENISIMA S.A.        Extra      1111,11  20,00    222222,20
+                                                            --------------------
+Totales por fecha                                            20,00    222222,20
+
+Totales por Consultor                                        61,00   2544444,18
+Fecha:  06/05/2016                                                  Hoja 002
+                           Listado de horas aplicadas
+
+Consultor: 00011          Nombre: Miki Perez
+                          Categoría: Categoria uno
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2009 002 LA SERENISIMA S.A.        Normal     1111,11  10,50    116666,65
+                                                            --------------------
+Totales por fecha                                            10,50    116666,65
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+12/03/2009 002 LA SERENISIMA S.A.        Normal     1111,11  10,50    116666,65
+                                                            --------------------
+Totales por fecha                                            10,50    116666,65
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2010 003 ILOLAY S.A.               Especial   3333,33  10,50    349999,96
+                                                            --------------------
+Totales por fecha                                            10,50    349999,96
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2011 003 ILOLAY S.A.               Extra      2222,22  10,50    233333,31
+                                                            --------------------
+Totales por fecha                                            10,50    233333,31
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+04/05/2011 003 ILOLAY S.A.               Especial   3333,33  10,50    349999,96
+                                                            --------------------
+Totales por fecha                                            10,50    349999,96
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+03/08/2011 003 ILOLAY S.A.               Extra      2222,22  10,50    233333,31
+                                                            --------------------
+Totales por fecha                                            10,50    233333,31
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2021 003 ILOLAY S.A.               Extra      2222,22  10,50    233333,31
+                                                            --------------------
+Totales por fecha                                            10,50    233333,31
+
+Totales por Consultor                                        73,50   1633333,15
+Fecha:  06/05/2016                                                  Hoja 003
+                           Listado de horas aplicadas
+
+Consultor: 00012          Nombre: Lula Julia
+                          Categoría: Categoria dos
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2012 003 ILOLAY S.A.               Extra      6666,66  10,50    699999,93
+                                                            --------------------
+Totales por fecha                                            10,50    699999,93
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+11/09/2012 003 ILOLAY S.A.               Normal     5555,55  10,50    583333,27
+                                                            --------------------
+Totales por fecha                                            10,50    583333,27
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2020 003 ILOLAY S.A.               Extra      6666,66  10,50    699999,93
+                                                            --------------------
+Totales por fecha                                            10,50    699999,93
+
+Fecha    Empresa Razon social            Tipo       Tarifa   Horas   Importe
+--------------------------------------------------------------------------------
+01/02/2022 003 ILOLAY S.A.               Extra      6666,66  10,50    699999,93
+                                                            --------------------
+Totales por fecha                                            10,50    699999,93
+
+Totales por Consultor                                        42,00   2683333,06
+
+Total general                                                        6861110,39

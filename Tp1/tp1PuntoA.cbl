@@ -59,8 +59,8 @@
        DATA DIVISION.
        FILE SECTION.
        FD NOVTIMES1 LABEL RECORD IS STANDARD
-                    VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
-      -             'tmos-4/Tp1/Archivos de prueba/novTimes1.dat'.
+                    VALUE OF FILE-ID IS '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/novTimes1.dat'.
        01 NOV1-REG    .
            03 NOV1-NUMERO PIC X(5).
            03 NOV1-FECHA.
@@ -72,8 +72,8 @@
            03 NOV1-HORAS PIC 9(2)V99.
            03 NOV1-TIPO PIC 99.
        FD NOVTIMES2 LABEL RECORD IS STANDARD
-                    VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
-      -             'tmos-4/Tp1/Archivos de prueba/novTimes2.dat'.
+                    VALUE OF FILE-ID IS '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/novTimes2.dat'.
        01 NOV2-REG    .
            03 NOV2-NUMERO PIC X(5).
            03 NOV2-FECHA.
@@ -85,8 +85,8 @@
            03 NOV2-HORAS PIC 9(2)V99.
            03 NOV2-TIPO PIC 99.
        FD NOVTIMES3 LABEL RECORD IS STANDARD
-                    VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algori
-      -             'tmos-4/Tp1/Archivos de prueba/novTimes3.dat'.
+                    VALUE OF FILE-ID IS '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/novTimes3.dat'.
        01 NOV3-REG    .
            03 NOV3-NUMERO PIC X(5).
            03 NOV3-FECHA.
@@ -98,8 +98,8 @@
            03 NOV3-HORAS PIC 9(2)V99.
            03 NOV3-TIPO PIC 99.
        FD TIEMPOS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/times.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/times.dat'.
        01 TIE-REG.
            03 TIE-NUMERO PIC X(5).
            03 TIE-FECHA.
@@ -110,8 +110,8 @@
            03 TIE-TAREA PIC X(04).
            03 TIE-HORAS PIC 9(2)V99.
        FD TIEMPOS-NEW LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/timesNew.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/timesNew.dat'.
        01 TIE-NEW-REG.
            03 TIE-NEW-NUMERO PIC X(5).
            03 TIE-NEW-REG-FECHA.
@@ -122,8 +122,8 @@
            03 TIE-NEW-TAREA PIC X(04).
            03 TIE-NEW-HORAS PIC 9(2)V99.
        FD EMPRESAS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/empresas.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/empresas.dat'.
        01 EMP-REG.
            03 EMP-CODIGO PIC 9(03).
            03 EMP-RAZON PIC X(25).
@@ -131,8 +131,8 @@
            03 EMP-TEL PIC X(20).
            03 EMP-CUIT PIC 9(11).
        FD CONSULTORES LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/consultores.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -       'ps-Algoritmos-4/Tp1/Archivos de prueba/consultores.dat'.
        01 CONS-REG.
            03 CONS-NUMERO PIC X(5).
            03 CONS-DNI PIC 9(8).
@@ -141,27 +141,27 @@
            03 CONS-DIRE PIC X(20).
            03 CONS-TEL PIC X(20).
        FD TARIFAS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/tarifas.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/tarifas.dat'.
        01 TAR-REG.
            03 TAR-SRT PIC X(02).
            03 TAR-TIPO PIC 99.
            03 TAR-TARIFA PIC 9(5)V99.
        FD TIPOS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/tipos.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/tipos.dat'.
        01 TIP-REG.
            03 TIP-TIPO PIC X(02).
            03 TIP-DESC PIC X(10).
        FD CATEGORIAS LABEL RECORD IS STANDARD
-                   VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algorit
-      -            'mos-4/Tp1/Archivos de prueba/categorias.dat'.
+                   VALUE OF FILE-ID IS  '/home/miki/Escritorio/Algos 4/T
+      -         'ps-Algoritmos-4/Tp1/Archivos de prueba/categorias.dat'.
        01 CAT-REG.
            03 CAT-SRT PIC X(02).
            03 CAT-DESC PIC X(20).
        FD LISTADO LABEL RECORD IS STANDARD
-                  VALUE OF FILE-ID IS '/home/j/Desktop/Alg4/Tps-Algoritm
-      -           'os-4/Tp1/Archivos de prueba/listado.dat'.
+                  VALUE OF FILE-ID IS   '/home/miki/Escritorio/Algos 4/T
+      -          'ps-Algoritmos-4/Tp1/Archivos de prueba/listado.dat'.
        01 LINEA PIC X(80).
 
        WORKING-STORAGE SECTION.

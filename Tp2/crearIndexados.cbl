@@ -265,10 +265,6 @@
        FORMAR-EMP-INDEX-REG.
            MOVE EMP-REG TO EMP-IND-REG.
            PERFORM CARGAR-TABLA.
-           WRITE EMP-IND-REG
-               INVALID KEY DISPLAY 'Invalid Key'
-               NOT INVALID KEY DISPLAY 'Record Inserted'
-           END-WRITE.
            WRITE EMP-IND-REG.
            PERFORM LEER-EMPRESAS.
 

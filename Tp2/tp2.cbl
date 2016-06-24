@@ -173,10 +173,10 @@
            02 FILLER PIC X(2) VALUE SPACES.
            02 FILLER PIC X(8) VALUE 'Fecha'.
            02 FILLER PIC X(13) VALUE 'Consultor'.
-           02 FILLER PIC X(27) VALUE 'Nombre'.
-           02 FILLER PIC X(10) VALUE 'Tarifa'.
-           02 FILLER PIC X(10) VALUE 'Horas'.
-           02 FILLER PIC X(10) VALUE 'Importe'.
+           02 FILLER PIC X(28) VALUE 'Nombre'.
+           02 FILLER PIC X(9) VALUE 'Tarifa'.
+           02 FILLER PIC X(11) VALUE 'Horas'.
+           02 FILLER PIC X(9) VALUE 'Importe'.
 
        01 REP-FILA.
            02 REP-FILA-DIA PIC X(2) VALUE ZERO.

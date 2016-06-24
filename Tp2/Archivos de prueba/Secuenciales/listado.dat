@@ -1,121 +1,131 @@
 
-Fecha:  21/06/2016                                                      Hoja 001
+Fecha:  24/06/2016                                                      Hoja 001
+
+                           Horas Aplicadas por Empresa                          
+Empresa: ARCOR S.A.                                                             
+Cuit: 30409025689                                                               
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+01/01/2010  00001     Consultor ign                200,00   10,00      2000,00  
+01/01/2010  00002     Javier Ugarte                200,00   20,50      4100,00  
+01/01/2010  00003     Miki Perez                   100,00   20,50      2050,00  
+01/01/2010  00004     Lula Julia                   150,00   20,50      3075,00  
+                                                            --------------------
+Totales por fecha                                           71,50     11225,00  
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+01/06/2010  00003     Miki Perez                   100,00    5,00       500,00  
+                                                            --------------------
+Totales por fecha                                            5,00       500,00  
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+04/06/2010  00003     Miki Perez                   100,00    5,00       500,00  
+                                                            --------------------
+Totales por fecha                                            5,00       500,00  
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+01/01/2011  00001     Consultor ign                300,00   10,50      3150,00  
+                                                            --------------------
+Totales por fecha                                           10,50      3150,00  
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+03/02/2011  00002     Javier Ugarte                300,00   20,00      6000,00  
+                                                            --------------------
+Totales por fecha                                           20,00      6000,00  
+
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
+--------------------------------------------------------------------------------
+01/05/2013  00002     Javier Ugarte                300,00   10,00      3000,00  
+                                                            --------------------
+Totales por fecha                                           10,00      3000,00  
+Totales por Empresa                                        122,00     24375,00  
+Fecha:  24/06/2016                                                      Hoja 002
 
                            Horas Aplicadas por Empresa                          
 Empresa: ILOLAY S.A.                                                            
 Cuit: 30409025467                                                               
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/02/2010  00011     Miki Perez                 33333,33   10,50    349999,96  
+01/02/2009  00003     Miki Perez                   200,00   10,50      2100,00  
                                                             --------------------
-Totales por fecha                                           10,50    349999,96  
+Totales por fecha                                           10,50      2100,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/02/2011  00011     Miki Perez                 22222,22   10,50    233333,31  
+01/02/2010  00002     Javier Ugarte                400,00   10,50      4200,00  
+01/02/2010  00003     Miki Perez                   300,00   10,50      3150,00  
                                                             --------------------
-Totales por fecha                                           10,50    233333,31  
+Totales por fecha                                           21,00      7350,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-04/05/2011  00011     Miki Perez                 33333,33   10,50    349999,96  
+01/02/2011  00003     Miki Perez                   200,00   10,50      2100,00  
                                                             --------------------
-Totales por fecha                                           10,50    349999,96  
+Totales por fecha                                           10,50      2100,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-03/08/2011  00011     Miki Perez                 11111,11   10,50    116666,65  
+04/05/2011  00003     Miki Perez                   300,00   10,50      3150,00  
                                                             --------------------
-Totales por fecha                                           10,50    116666,65  
+Totales por fecha                                           10,50      3150,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/02/2012  00012     Lula Julia                 66666,66   10,50    699999,93  
+03/08/2011  00003     Miki Perez                   100,00   10,50      1050,00  
                                                             --------------------
-Totales por fecha                                           10,50    699999,93  
+Totales por fecha                                           10,50      1050,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/03/2012  00010     Javier Ugarte              99999,99   21,20   2119999,78  
+01/02/2012  00004     Lula Julia                   250,00   10,50      2625,00  
                                                             --------------------
-Totales por fecha                                           21,20   2119999,78  
+Totales por fecha                                           10,50      2625,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/04/2012  00010     Javier Ugarte              99999,99   19,80   1979999,80  
+01/03/2012  00002     Javier Ugarte                200,00   21,20      4240,00  
                                                             --------------------
-Totales por fecha                                           19,80   1979999,80  
+Totales por fecha                                           21,20      4240,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-11/09/2012  00012     Lula Julia                 77777,77   10,50    816666,58  
+01/04/2012  00002     Javier Ugarte                200,00   19,80      3960,00  
                                                             --------------------
-Totales por fecha                                           10,50    816666,58  
+Totales por fecha                                           19,80      3960,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/09/2013  00012     Lula Julia                 55555,55   10,00    555555,50  
+01/09/2013  00004     Lula Julia                   150,00   10,00      1500,00  
                                                             --------------------
-Totales por fecha                                           10,00    555555,50  
-Fecha:  21/06/2016                                                      Hoja 002
+Totales por fecha                                           10,00      1500,00  
+Fecha:  24/06/2016                                                      Hoja 003
 
                            Horas Aplicadas por Empresa                          
 Empresa: ILOLAY S.A.                                                            
 Cuit: 30409025467                                                               
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/09/2016  00012     Lula Julia                 55555,55   10,00    555555,50  
+01/01/2014  00001     Consultor ign                400,00    8,00      3200,00  
                                                             --------------------
-Totales por fecha                                           10,00    555555,50  
-Totales por Empresa                                        124,00   7777776,97  
-Fecha:  21/06/2016                                                      Hoja 003
+Totales por fecha                                            8,00      3200,00  
 
-                           Horas Aplicadas por Empresa                          
-Empresa: LA SERENISIMA S.A.                                                     
-Cuit: 30409025266                                                               
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-01/02/2009  00011     Miki Perez                 22222,22   10,50    233333,31  
+01/02/2016  00004     Lula Julia                   150,00   10,00      1500,00  
                                                             --------------------
-Totales por fecha                                           10,50    233333,31  
+Totales por fecha                                           10,00      1500,00  
 
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
+  Fecha   Consultor    Nombre                      Tarifa   Horas      Importe  
 --------------------------------------------------------------------------------
-12/03/2009  00011     Miki Perez                 22222,22   10,50    233333,31  
+01/03/2016  00004     Lula Julia                   250,00    5,00      1250,00  
                                                             --------------------
-Totales por fecha                                           10,50    233333,31  
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
---------------------------------------------------------------------------------
-01/01/2011  00010     Javier Ugarte              11111,11   10,50    116666,65  
-                                                            --------------------
-Totales por fecha                                           10,50    116666,65  
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
---------------------------------------------------------------------------------
-10/01/2011  00010     Javier Ugarte              11111,11   10,50    116666,65  
-                                                            --------------------
-Totales por fecha                                           10,50    116666,65  
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
---------------------------------------------------------------------------------
-01/02/2011  00010     Javier Ugarte              99999,99   20,00   1999999,80  
-                                                            --------------------
-Totales por fecha                                           20,00   1999999,80  
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
---------------------------------------------------------------------------------
-25/02/2011  00010     Javier Ugarte              22222,22   20,00    444444,40  
-                                                            --------------------
-Totales por fecha                                           20,00    444444,40  
-
-  Fecha   Consultor    Nombre                     Tarifa    Horas     Importe   
---------------------------------------------------------------------------------
-01/08/2012  00012     Lula Julia                 77777,77   21,20   1648888,72  
-                                                            --------------------
-Totales por fecha                                           21,20   1648888,72  
-Totales por Empresa                                        103,20   4793332,84  
-Total general                                                      12571109,81  
+Totales por fecha                                            5,00      1250,00  
+Totales por Empresa                                        147,50     34025,00  
+Total general                                                         58400,00  
